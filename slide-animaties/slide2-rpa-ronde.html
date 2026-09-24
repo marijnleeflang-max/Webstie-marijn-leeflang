@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Slide 2 – De robot draait zijn ronde</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  html, body { width: 1480px; height: 528px; }
+  #tag { left: 40px; top: 28px; font-size: 15px; font-weight: 500; color: var(--muted); letter-spacing: .2px; }
+  #robot {
+    left: 358px; top: 173px; width: 84px; height: 84px; border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(145deg, rgba(76,192,255,.22), rgba(40,90,190,.18));
+    border: 1px solid rgba(120,200,255,.35);
+  }
+  #robotLabel { left: 250px; top: 266px; width: 300px; }
+  #count { left: 300px; top: 332px; width: 200px; text-align: center; }
+  #count .pill { color: var(--blue); background: rgba(76,192,255,.08); }
+  .portal {
+    position: absolute; width: 50px; height: 50px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(12,24,46,.9); border: 1px solid rgba(255,255,255,.14);
+  }
+  .portal svg { width: 20px; height: 20px; }
+  .plabel { position: absolute; width: 120px; font-size: 13.5px; font-weight: 400; color: var(--muted); }
+  .badge {
+    position: absolute; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    background: var(--blue); color: #06223a; box-shadow: 0 0 14px rgba(76,192,255,.6);
+  }
+  #eigen { left: 1040px; top: 58px; width: 360px; height: 172px; }
+  #service { left: 1040px; top: 298px; width: 360px; height: 172px; }
+  .out { position: absolute; left: 16px; right: 16px; top: 76px; }
+  .out .row + .row { margin-top: 8px; }
+  .ok { color: #7ee2a8; }
+</style>
+</head>
+<body>
+<div class="panel">
+  <div class="dots"></div>
+  <div class="abs" id="tag">5 woningcorporatieportalen</div>
+  <svg id="lines" class="abs" width="1480" height="528" style="left:0;top:0"></svg>
+  <div id="portals"></div>
+
+  <div class="card" id="robot">
+    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#dff3ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="8" width="16" height="11" rx="3.5"/><path d="M12 8V4.5"/><circle cx="12" cy="3.5" r="1.2" fill="#4cc0ff" stroke="none"/>
+      <path d="M2 12.5v3M22 12.5v3"/>
+      <circle id="eyeL" cx="9" cy="13" r="1.4" fill="#4cc0ff" stroke="none"/><circle id="eyeR" cx="15" cy="13" r="1.4" fill="#4cc0ff" stroke="none"/>
+      <path d="M9.5 16.3h5"/>
+    </svg>
+  </div>
+  <div class="abs label" id="robotLabel">
+    <div class="t">RPA-robot</div>
+    <div class="s">elke 30 min langs de portalen</div>
+  </div>
+  <div class="abs" id="count"><span class="pill"><span id="countN">0</span>&nbsp;meldingen opgehaald</span></div>
+
+  <div class="card" id="eigen">
+    <div class="head">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4cc0ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/></svg></div>
+      <div><div class="title">Eigen systeem</div><div class="sub">meldingen overgenomen</div></div>
+    </div>
+    <div class="out" id="eigenOut">
+      <div class="row"><span class="k">Nieuwe meldingen</span><span id="eigenN">—</span></div>
+      <div class="row"><span class="k">Status</span><span id="eigenSt"></span></div>
+    </div>
+  </div>
+
+  <div class="card" id="service">
+    <div class="head">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#ff5c9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h4"/></svg></div>
+      <div><div class="title">Serviceafdeling</div><div class="sub">verslag van meldingen</div></div>
+    </div>
+    <div class="out" id="serviceOut">
+      <div class="row"><span class="k">Verslag</span><span id="servV">—</span></div>
+      <div class="row"><span class="k">Status</span><span id="servSt"></span></div>
+    </div>
+  </div>
+</div>
+
+<script src="lib.js"></script>
+<script>
+const DURATION = 10;
+const C = { x: 400, y: 255 }, R = 175;
+const ORBIT_START = 0.4, ORBIT_END = 5.8;
+// Portalen rondom de robot, met een opening rechts waar de uitvoer vertrekt
+const PORTALS = [60, 120, 180, 240, 300].map((deg, i) => ({ deg, n: [2, 1, 1, 2, 1][i], name: `Portaal ${i + 1}` }));
+const svg = $("lines");
+
+// Baan van de robot
+const orbit = new Comet(svg, `M${C.x + R},${C.y} A${R},${R} 0 1 1 ${C.x + R - 0.01},${C.y - 0.5}`, { color: "#4cc0ff", tail: 170, base: "rgba(140,180,230,.13)" });
+svgEl("circle", { cx: C.x, cy: C.y, r: R + 16, fill: "none", stroke: "rgba(140,180,230,.06)", "stroke-dasharray": "2 7" }, svg);
+
+// Uitvoerlijnen
+const toEigen = new Comet(svg, "M446,208 C760,208 830,144 1040,144", { color: "#4cc0ff" });
+const toService = new Comet(svg, "M446,222 C760,222 830,384 1040,384", { color: "#ff5c9a" });
+
+const LOGIN = `<svg viewBox="0 0 24 24" fill="none" stroke="#4cc0ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M10 16l4-4-4-4"/><path d="M14 12H4"/></svg>`;
+PORTALS.forEach((p) => {
+  const a = p.deg * Math.PI / 180, cx = C.x + R * Math.cos(a), cy = C.y + R * Math.sin(a);
+  p.hit = ORBIT_START + (p.deg / 360) * (ORBIT_END - ORBIT_START);
+  p.el = document.createElement("div"); p.el.className = "portal"; p.el.innerHTML = LOGIN;
+  p.el.style.left = (cx - 25) + "px"; p.el.style.top = (cy - 25) + "px";
+  $("portals").appendChild(p.el);
+  // label naar buiten toe
+  const lab = document.createElement("div"); lab.className = "plabel"; lab.textContent = p.name;
+  const lx = C.x + (R + 44) * Math.cos(a), ly = C.y + (R + 40) * Math.sin(a);
+  const c = Math.cos(a);
+  lab.style.textAlign = c < -0.3 ? "right" : c > 0.3 ? "left" : "center";
+  lab.style.left = (c < -0.3 ? lx - 120 : c > 0.3 ? lx : lx - 60) + "px";
+  lab.style.top = (ly - 9) + "px";
+  $("portals").appendChild(lab);
+  p.badge = document.createElement("div"); p.badge.className = "badge"; p.badge.textContent = "+" + p.n;
+  p.badge.style.left = (cx + 28) + "px"; p.badge.style.top = (cy - 11) + "px";
+  $("portals").appendChild(p.badge);
+});
+
+const RESET = 9.2;
+function renderAt(t) {
+  // Ronde langs de portalen
+  const L = orbit.L, tail = orbit.tail;
+  const s = L * easeInOut(prog(t, ORBIT_START, ORBIT_END)) + tail * prog(t, ORBIT_END, ORBIT_END + 0.4);
+  // easeInOut maakt de ronde rustig; bereken bezoektijden met dezelfde curve
+  orbit.set(t > ORBIT_START ? s / (L + tail) : 0);
+  const reached = (L * easeInOut(prog(t, ORBIT_START, ORBIT_END))) / L * 360;
+
+  let count = 0;
+  PORTALS.forEach((p) => {
+    const hit = reached >= p.deg;
+    const glow = hit ? clamp(1 - (reached - p.deg) / 90) : 0;
+    p.el.style.borderColor = `rgba(76,192,255,${0.14 + 0.7 * glow})`;
+    p.el.style.boxShadow = `0 0 ${24 * glow}px rgba(76,192,255,${0.55 * glow})`;
+    const show = hit ? clamp((reached - p.deg) / 12) * (1 - prog(t, RESET, RESET + 0.5)) : 0;
+    p.badge.style.opacity = show;
+    p.badge.style.transform = `translateY(${(1 - easeOut(clamp((reached - p.deg) / 20))) * 6}px)`;
+    if (hit) count += p.n;
+  });
+  const resetFade = 1 - prog(t, RESET, RESET + 0.5);
+  $("countN").textContent = t > RESET + 0.25 ? 0 : count;
+  $("count").style.opacity = 0.4 + 0.6 * Math.min(prog(t, ORBIT_START, ORBIT_START + 0.3), 1 - inHoldOut(t, RESET, 0.25, 0, 0.25));
+
+  // Robot: zachte gloed tijdens de ronde, ogen kijken mee
+  const active = prog(t, ORBIT_START, ORBIT_START + 0.4) * (1 - prog(t, ORBIT_END + 1.2, ORBIT_END + 1.8));
+  $("robot").style.boxShadow = `0 0 ${24 + 26 * active}px rgba(76,192,255,${0.15 + 0.3 * active}), 0 10px 30px rgba(0,0,0,.3)`;
+  const ang = reached * Math.PI / 180;
+  ["eyeL", "eyeR"].forEach((id) => {
+    $(id).setAttribute("transform", `translate(${Math.cos(ang) * 0.9 * active},${Math.sin(ang) * 0.9 * active})`);
+  });
+
+  // Afleveren
+  toEigen.set(prog(t, 6.1, 7.1));
+  toService.set(prog(t, 6.25, 7.25));
+  const inE = easeOut(prog(t, 7.0, 7.4)) * resetFade, inS = easeOut(prog(t, 7.15, 7.55)) * resetFade;
+  const doneE = inE > 0.5, doneS = inS > 0.5;
+  $("eigenN").textContent = doneE ? "7" : "—";
+  $("eigenSt").innerHTML = doneE ? '<span class="ok">✓ geaccepteerd</span>' : '<span class="k">wacht op ronde</span>';
+  $("servV").textContent = doneS ? "7 lekkages · 5 portalen" : "—";
+  $("servSt").innerHTML = doneS ? '<span class="ok">✓ verstuurd</span>' : '<span class="k">wacht op ronde</span>';
+  $("eigenOut").style.opacity = 0.45 + 0.55 * Math.abs(2 * inE - 1);
+  $("serviceOut").style.opacity = 0.45 + 0.55 * Math.abs(2 * inS - 1);
+  const hitE = inHoldOut(t, 7.0, 0.15, 0.1, 0.9), hitS = inHoldOut(t, 7.15, 0.15, 0.1, 0.9);
+  $("eigen").style.borderColor = `rgba(76,192,255,${0.1 + 0.45 * hitE})`;
+  $("service").style.borderColor = `rgba(255,92,154,${0.1 + 0.45 * hitS})`;
+}
+start(renderAt, DURATION);
+</script>
+</body>
+</html>

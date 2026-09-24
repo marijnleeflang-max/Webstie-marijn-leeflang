@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Slide 1 – Van order tot verrekening</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  html, body { width: 1428px; height: 528px; }
+  #orders { left: 56px; top: 122px; width: 300px; height: 250px; }
+  #list { position: absolute; left: 16px; right: 16px; top: 84px; height: 148px; overflow: hidden; }
+  #list .row { position: absolute; left: 0; right: 0; }
+  #node {
+    left: 654px; top: 186px; width: 120px; height: 120px; border-radius: 30px;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(145deg, rgba(76,192,255,.22), rgba(40,90,190,.18));
+    border: 1px solid rgba(120,200,255,.35);
+  }
+  #ripple { left: 654px; top: 186px; width: 120px; height: 120px; border-radius: 30px; border: 1.5px solid var(--blue); }
+  #nodeLabel { left: 514px; top: 326px; width: 400px; }
+  #afas { left: 1044px; top: 58px; width: 330px; height: 168px; }
+  #bloem { left: 1044px; top: 298px; width: 330px; height: 168px; }
+  .out { position: absolute; left: 16px; right: 16px; top: 74px; }
+  .out .row + .row { margin-top: 8px; }
+  .ok { color: #7ee2a8; }
+</style>
+</head>
+<body>
+<div class="panel">
+  <div class="dots"></div>
+  <svg id="lines" class="abs" width="1428" height="528" style="left:0;top:0"></svg>
+
+  <!-- Orders -->
+  <div class="card" id="orders">
+    <div class="head">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4cc0ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0z"/><path d="M5 13v7h14v-7"/><path d="M10 20v-4h4v4"/></svg></div>
+      <div><div class="title">Orders</div><div class="sub">via fleurop.nl</div></div>
+    </div>
+    <div id="list"></div>
+  </div>
+
+  <!-- Verwerking -->
+  <div class="abs" id="ripple"></div>
+  <div class="card" id="node"><svg id="cog" viewBox="-24 -24 48 48" width="58" height="58"></svg></div>
+  <div class="abs label" id="nodeLabel">
+    <div class="t">Automatische verwerking</div>
+    <div class="s">orderinformatie → journaalposten &amp; facturen</div>
+  </div>
+
+  <!-- AFAS -->
+  <div class="card" id="afas">
+    <div class="head">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4cc0ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
+      <div><div class="title">AFAS</div><div class="sub">journaalposten &amp; facturen</div></div>
+    </div>
+    <div class="out" id="afasOut">
+      <div class="row"><span class="k">Journaalpost</span><span id="afasAmt"></span></div>
+      <div class="row"><span class="k">Factuur</span><span id="afasInv"></span></div>
+    </div>
+  </div>
+
+  <!-- Bloemisten -->
+  <div class="card" id="bloem">
+    <div class="head">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#ff5c9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11.5s-4.5-2.8-4.5-5.6A2.4 2.4 0 0 1 12 4.6a2.4 2.4 0 0 1 4.5 1.3c0 2.8-4.5 5.6-4.5 5.6z"/><path d="M3 15h3l4 2h4a1.5 1.5 0 0 0 0-3h-3"/><path d="M14 17l5-2.5a1.5 1.5 0 0 1 2 2L14.5 20H3"/></svg></div>
+      <div><div class="title">Bloemisten</div><div class="sub">self-billing &amp; verrekening</div></div>
+    </div>
+    <div class="out" id="bloemOut">
+      <div class="row"><span id="bloemName"></span><span id="bloemAmt"></span></div>
+      <div class="row"><span class="k">Status</span><span class="ok">✓ verrekend</span></div>
+    </div>
+  </div>
+</div>
+
+<script src="lib.js"></script>
+<script>
+const ORDERS = [
+  { p: "Boeket Zomerpracht", c: "€ 34,95", inv: "F-26-0412", b: "Bloemsalon Iris",   pay: "€ 27,96" },
+  { p: "Rode rozen · 12 st", c: "€ 42,50", inv: "F-26-0413", b: "De Tulpentuin",     pay: "€ 34,00" },
+  { p: "Plukboeket XL",      c: "€ 29,95", inv: "F-26-0414", b: "Bloemen van Dijk",  pay: "€ 23,96" },
+  { p: "Witte orchidee",     c: "€ 38,00", inv: "F-26-0415", b: "Atelier Pioen",     pay: "€ 30,40" },
+];
+const P = 3, N = ORDERS.length, DURATION = P * N, ROW = 50;
+
+// Orderrijen (één element per order, hergebruikt in de lus)
+const rows = ORDERS.map((o) => {
+  const r = document.createElement("div");
+  r.className = "row";
+  r.innerHTML = `<span>${o.p}</span><span class="k">${o.c}</span>`;
+  $("list").appendChild(r);
+  return r;
+});
+
+// Tandwiel
+(function drawCog() {
+  const teeth = 8, pts = [];
+  for (let i = 0; i < teeth * 4; i++) {
+    const a = (i / (teeth * 4)) * Math.PI * 2, r = (i % 4 < 2) ? 20 : 15.5;
+    pts.push([Math.cos(a) * r, Math.sin(a) * r]);
+  }
+  svgEl("path", { d: "M" + pts.map((p) => p.join(",")).join("L") + "Z", fill: "none", stroke: "#dff3ff", "stroke-width": 2.2, "stroke-linejoin": "round" }, $("cog"));
+  svgEl("circle", { r: 6, fill: "none", stroke: "#4cc0ff", "stroke-width": 2.2 }, $("cog"));
+})();
+
+// Lijnen
+const svg = $("lines");
+const lineIn  = new Comet(svg, "M356,247 L654,247", { color: "#4cc0ff" });
+const lineAfas = new Comet(svg, "M774,238 C900,238 920,142 1044,142", { color: "#4cc0ff" });
+const lineBloem = new Comet(svg, "M774,254 C900,254 920,382 1044,382", { color: "#ff5c9a" });
+
+function renderAt(t) {
+  const k = Math.floor(t / P) % N;   // order die nu binnenkomt
+  const u = t % P;                   // tijd binnen deze order
+
+  // 1. Order schuift bovenaan de lijst in
+  const e = easeInOut(prog(u, 0, 0.6));
+  ORDERS.forEach((_, i) => {
+    const age = mod(k - i, N);       // 0 = nieuwste
+    const slot = age - 1 + e;        // van -1 naar 0, 0 naar 1, ...
+    const r = rows[i];
+    r.style.transform = `translateY(${slot * ROW}px)`;
+    r.style.opacity = age === 0 ? e : age === N - 1 ? 1 - e : 1;
+    const fresh = age === 0 ? 1 - prog(u, 1.2, 2.2) : 0;
+    r.style.borderColor = `rgba(76,192,255,${0.06 + 0.4 * fresh})`;
+    r.style.background = `rgba(76,192,255,${0.04 + 0.06 * fresh})`;
+  });
+
+  // 2. Komeet naar de verwerking
+  lineIn.set(prog(u, 0.5, 1.45));
+
+  // 3. Verwerking: zachte gloed en één rimpeling
+  const glow = inHoldOut(u, 1.25, 0.25, 0.2, 0.6);
+  $("node").style.boxShadow = `0 0 ${30 + 30 * glow}px rgba(76,192,255,${0.18 + 0.35 * glow}), 0 10px 30px rgba(0,0,0,.3)`;
+  $("cog").style.transform = `rotate(${easeInOut(prog(u, 1.2, 2.0)) * 45 + k * 45}deg)`;
+  const rp = prog(u, 1.3, 2.3);
+  $("ripple").style.opacity = rp > 0 && rp < 1 ? 0.6 * (1 - rp) : 0;
+  $("ripple").style.transform = `scale(${1 + 0.35 * easeOut(rp)})`;
+
+  // 4. Naar AFAS en de bloemisten
+  lineAfas.set(prog(u, 1.7, 2.6));
+  lineBloem.set(prog(u, 1.8, 2.7));
+
+  // 5. Uitkomsten verversen (met korte crossfade)
+  const shown = u >= 2.55 ? k : mod(k - 1, N);
+  const o = ORDERS[shown];
+  $("afasAmt").textContent = o.c;
+  $("afasInv").textContent = o.inv;
+  $("bloemName").textContent = o.b;
+  $("bloemAmt").textContent = o.pay;
+  const fade = clamp(Math.abs(u - 2.55) / 0.18);
+  $("afasOut").style.opacity = 0.25 + 0.75 * fade;
+  $("bloemOut").style.opacity = 0.25 + 0.75 * clamp(Math.abs(u - 2.65) / 0.18);
+  const hitA = inHoldOut(u, 2.5, 0.15, 0.1, 0.8), hitB = inHoldOut(u, 2.6, 0.15, 0.1, 0.8);
+  $("afas").style.borderColor = `rgba(76,192,255,${0.1 + 0.45 * hitA})`;
+  $("bloem").style.borderColor = `rgba(255,92,154,${0.1 + 0.45 * hitB})`;
+}
+start(renderAt, DURATION);
+</script>
+</body>
+</html>
