@@ -1,0 +1,799 @@
+<style>
+/* ============================================================================
+  PEACOCK | Landingspagina webinar AI Capture Studio, Logistiek & Transport
+  Plak dit HELE bestand in één blok "Aangepaste HTML" (Custom HTML) in WordPress.
+  Vervang eerst de plaatshouders DATUM en TIJD (tussen blokhaken) via zoeken en vervangen. Zie LEESMIJ.md.
+============================================================================ */
+/* ---------- Basis & huisstijlkleuren (Corporate Identity 2024) ---------- */
+#pck-webinar{
+  --pck-navy:#0c3f6c; --pck-navy-2:#103f6b; --pck-ink:#050408; --pck-blue:#009fe3; --pck-ice:#e4f0f5;
+  --pck-green:#95c11f; --pck-green-dark:#7fa618; --pck-magenta:#a71e5e; --pck-purple:#a84d97; --pck-teal:#00a091;
+  --pck-muted:#3f6285; --pck-line:#cfdde8;
+  --pck-grad:linear-gradient(105deg,#050408 0%,#071427 20%,#103f6b 55%,#a71e5e 100%);
+  --pck-grad-card:linear-gradient(135deg,#050408 0%,#0c2c4f 45%,#103f6b 65%,#a71e5e 130%);
+  --pck-radius:24px; --pck-shadow:0 24px 60px -24px rgba(5,4,8,.35);
+  position:relative; box-sizing:border-box;
+  width:100vw !important; max-width:100vw !important; margin-left:calc(50% - 50vw) !important; margin-right:calc(50% - 50vw) !important;
+  margin-top:0; margin-bottom:0; padding:0; overflow:hidden;
+  background:#fff; color:var(--pck-navy); font-size:17px; line-height:1.65; text-align:left;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+/* Alternatief als je thema geen volle breedte toestaat: geef de wrapper de class "pck-boxed" */
+#pck-webinar.pck-boxed{width:auto !important; max-width:100% !important; margin-left:0 !important; margin-right:0 !important; border-radius:32px}
+html:has(#pck-webinar), body:has(#pck-webinar){overflow-x:clip}
+@media (prefers-reduced-motion:no-preference){html:has(#pck-webinar){scroll-behavior:smooth}}
+/* Paginatitel van het thema verbergen: de hero heeft al een H1 */
+body:has(#pck-webinar) .entry-title, body:has(#pck-webinar) .wp-block-post-title, body:has(#pck-webinar) h1.page-title{display:none}
+/* ---------- Reset binnen de pagina (voorkomt botsingen met het thema) ---------- */
+#pck-webinar *, #pck-webinar *::before, #pck-webinar *::after{box-sizing:border-box}
+#pck-webinar h1, #pck-webinar h2, #pck-webinar h3, #pck-webinar h4, #pck-webinar p, #pck-webinar ul, #pck-webinar ol, #pck-webinar li, #pck-webinar figure, #pck-webinar fieldset, #pck-webinar legend, #pck-webinar details, #pck-webinar summary{margin:0; padding:0; border:0; background:none}
+#pck-webinar h1, #pck-webinar h2, #pck-webinar h3, #pck-webinar h4{color:inherit; font-weight:700; text-transform:none; letter-spacing:-.01em; font-style:normal}
+#pck-webinar h1::before, #pck-webinar h1::after, #pck-webinar h2::before, #pck-webinar h2::after, #pck-webinar h3::before, #pck-webinar h3::after, #pck-webinar li::before, #pck-webinar li::after{content:none}
+#pck-webinar ul, #pck-webinar ol{list-style:none}
+#pck-webinar li{margin:0; line-height:inherit}
+#pck-webinar p{font-size:inherit; line-height:inherit; color:inherit}
+#pck-webinar a{color:inherit; text-decoration:none; box-shadow:none; border:0; background-image:none}
+#pck-webinar strong{font-weight:700; color:inherit}
+#pck-webinar em{font-style:normal}
+#pck-webinar svg{display:block; flex-shrink:0; width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+#pck-webinar .pck-sr{position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+/* ---------- Layout ---------- */
+#pck-webinar .pck-wrap{position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:0 32px}
+#pck-webinar .pck-sec{position:relative; overflow:hidden; margin:0; padding:104px 0}
+#pck-webinar .pck-sec--ice{background:var(--pck-ice)}
+#pck-webinar .pck-sec--white{background:#fff}
+#pck-webinar .pck-sec--dark{background:var(--pck-grad); color:#fff}
+#pck-webinar .pck-split{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:64px; align-items:center}
+#pck-webinar .pck-head{max-width:760px; margin-bottom:56px}
+#pck-webinar .pck-head--center{margin-left:auto; margin-right:auto; text-align:center}
+#pck-webinar .pck-sec{scroll-margin-top:120px}
+/* ---------- Typografie ---------- */
+#pck-webinar .pck-eyebrow{display:block; margin-bottom:14px; color:var(--pck-blue); font-size:22px; line-height:1.3; font-weight:400}
+#pck-webinar .pck-h1{margin-bottom:24px; color:#fff; font-size:clamp(40px,5.2vw,72px); line-height:1.04; letter-spacing:-.02em}
+#pck-webinar .pck-h2{margin-bottom:20px; font-size:clamp(30px,3.3vw,44px); line-height:1.12}
+#pck-webinar .pck-h3{margin-bottom:10px; font-size:21px; line-height:1.3}
+#pck-webinar .pck-lead{font-size:19px; line-height:1.7; color:var(--pck-muted)}
+#pck-webinar .pck-sec--dark .pck-lead, #pck-webinar .pck-hero .pck-lead{color:rgba(255,255,255,.86)}
+#pck-webinar .pck-code{display:block; margin-bottom:10px; color:var(--pck-blue); font-size:14px; font-weight:700; letter-spacing:.04em}
+/* ---------- Knoppen (zoals op peacock-ia.nl) ---------- */
+#pck-webinar .pck-btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:0; margin:0; padding:16px 28px; border:2px solid transparent; border-radius:6px; background:var(--pck-green); color:#fff; font:inherit; font-size:17px; font-weight:700; line-height:1.2; text-align:center; text-decoration:none; text-transform:none; letter-spacing:0; box-shadow:none; cursor:pointer; transition:background-color .2s ease, border-color .2s ease, color .2s ease, transform .2s ease}
+#pck-webinar .pck-btn svg{width:20px; height:20px; stroke-width:2.2}
+#pck-webinar .pck-btn:hover, #pck-webinar .pck-btn:focus-visible{background:var(--pck-green-dark); color:#fff; transform:translateY(-1px)}
+#pck-webinar .pck-btn--ghost{background:transparent; border-color:#fff; color:#fff}
+#pck-webinar .pck-btn--ghost:hover, #pck-webinar .pck-btn--ghost:focus-visible{background:#fff; color:var(--pck-navy)}
+#pck-webinar .pck-btn--block{display:flex; width:100%}
+#pck-webinar .pck-btn:focus-visible, #pck-webinar a:focus-visible, #pck-webinar summary:focus-visible{outline:3px solid var(--pck-blue); outline-offset:3px}
+#pck-webinar .pck-btns{display:flex; flex-wrap:wrap; gap:14px}
+/* ---------- Huisstijlelement: cirkel met het hart in de hoek ---------- */
+#pck-webinar .pck-circle{position:absolute; z-index:0; width:760px; height:760px; border-radius:50%; pointer-events:none}
+#pck-webinar .pck-circle--white{border:1.5px solid rgba(255,255,255,.55)}
+#pck-webinar .pck-circle--grad{border:2px solid transparent; background:linear-gradient(135deg,var(--pck-blue),var(--pck-purple),var(--pck-magenta)) border-box; -webkit-mask:linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask:linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0); mask-composite:exclude; opacity:.45}
+#pck-webinar .pck-circle--br{right:-380px; bottom:-380px}
+#pck-webinar .pck-circle--tr{right:-380px; top:-380px}
+#pck-webinar .pck-circle--bl{left:-380px; bottom:-380px}
+#pck-webinar .pck-circle--tl{left:-380px; top:-380px}
+/* ---------- Hero ---------- */
+#pck-webinar .pck-hero{position:relative; overflow:hidden; margin:0; padding:88px 0 176px; background:radial-gradient(circle at 82% 70%,rgba(167,30,94,.45),rgba(167,30,94,0) 45%), var(--pck-grad); color:#fff; border-bottom-right-radius:120px}
+#pck-webinar .pck-hero .pck-split{grid-template-columns:minmax(0,1fr) minmax(0,1.08fr); gap:56px}
+#pck-webinar .pck-hero .pck-lead{max-width:560px; margin-bottom:28px}
+#pck-webinar .pck-meta{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:34px}
+#pck-webinar .pck-meta li{display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border:1px solid rgba(255,255,255,.28); border-radius:999px; background:rgba(255,255,255,.08); font-size:15px; line-height:1.2; color:#fff}
+#pck-webinar .pck-meta svg{width:18px; height:18px; color:var(--pck-blue)}
+/* Hero-visual: uitgelezen transportopdracht */
+#pck-webinar .pck-mock{position:relative; padding-right:168px}
+#pck-webinar .pck-mock__card{position:relative; z-index:1; padding:22px; border-radius:20px; background:#fff; color:var(--pck-navy); box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+#pck-webinar .pck-mock__bar{display:flex; align-items:center; gap:6px; margin-bottom:16px}
+#pck-webinar .pck-mock__dot{width:9px; height:9px; border-radius:50%; background:var(--pck-line)}
+#pck-webinar .pck-mock__app{margin-left:auto; font-size:12px; font-weight:700; color:var(--pck-muted); letter-spacing:.04em}
+#pck-webinar .pck-mock__mail{display:flex; align-items:center; gap:12px; padding:12px; border:1px solid var(--pck-line); border-radius:14px; background:#f6fafc}
+#pck-webinar .pck-mock__ico{display:grid; place-items:center; width:40px; height:40px; border-radius:10px; background:var(--pck-navy); color:#fff}
+#pck-webinar .pck-mock__ico svg{width:20px; height:20px}
+#pck-webinar .pck-mock__meta{display:flex; flex-direction:column; min-width:0; line-height:1.3}
+#pck-webinar .pck-mock__meta strong{font-size:15px}
+#pck-webinar .pck-mock__meta small{font-size:12px; color:var(--pck-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+#pck-webinar .pck-pill{display:inline-block; margin-left:auto; padding:5px 10px; border-radius:999px; font-size:12px; font-weight:700; line-height:1.2; white-space:nowrap}
+#pck-webinar .pck-pill--ok{background:#eef6d9; color:#4f6d06}
+#pck-webinar .pck-pill--wait{background:#f7e3ec; color:var(--pck-magenta)}
+#pck-webinar .pck-pill--check{background:#e0f1fb; color:#006e9e}
+#pck-webinar .pck-mock__label{display:flex; align-items:center; justify-content:space-between; gap:10px; margin:18px 0 8px; font-size:12px; font-weight:700; line-height:1.3; letter-spacing:.06em; text-transform:uppercase; color:var(--pck-muted)}
+#pck-webinar .pck-mock__label .pck-pill{letter-spacing:0; text-transform:none}
+#pck-webinar .pck-mock__fields li{display:grid; grid-template-columns:minmax(0,1fr) auto 52px; align-items:center; gap:12px; padding:9px 0; border-bottom:1px dashed var(--pck-line); font-size:14px; line-height:1.3}
+#pck-webinar .pck-mock__fields li:last-child{border-bottom:0}
+#pck-webinar .pck-mock__fields span{color:var(--pck-muted)}
+#pck-webinar .pck-mock__fields em{padding:3px 0; border-radius:6px; background:#e3f5f3; color:#00766b; font-size:12px; font-weight:700; text-align:center}
+#pck-webinar .pck-mock__done{display:flex; align-items:center; gap:8px; margin-top:14px; padding:12px 14px; border-radius:12px; background:var(--pck-green); color:#fff; font-size:15px; font-weight:700; line-height:1.2}
+#pck-webinar .pck-mock__done svg{width:18px; height:18px; stroke-width:2.6}
+#pck-webinar .pck-mock__steps{position:absolute; z-index:2; top:50%; right:0; display:flex; flex-direction:column; gap:10px; width:184px; transform:translateY(-50%)}
+#pck-webinar .pck-mock__steps li{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:11px 14px; border:1px solid rgba(255,255,255,.45); border-radius:12px; background:var(--pck-navy); color:#fff; font-size:14px; line-height:1.25; box-shadow:0 12px 30px -12px rgba(0,0,0,.6)}
+#pck-webinar .pck-mock__steps li svg{width:16px; height:16px; color:var(--pck-green); stroke-width:2.6}
+#pck-webinar .pck-mock__steps li.is-final{background:#fff; color:var(--pck-navy); font-weight:700}
+/* ---------- Infokaart onder de hero ---------- */
+#pck-webinar .pck-facts-wrap{position:relative; z-index:3; background:var(--pck-ice); padding:0 0 8px}
+#pck-webinar .pck-facts{display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,.8fr) auto; align-items:center; gap:28px; margin-top:-104px; padding:32px 36px; border-radius:var(--pck-radius); background:#fff; box-shadow:var(--pck-shadow)}
+#pck-webinar .pck-facts__title{grid-column:1 / -1; margin-bottom:-6px; color:var(--pck-blue); font-size:24px; line-height:1.2}
+#pck-webinar .pck-fact{display:flex; align-items:center; gap:14px; min-width:0}
+#pck-webinar .pck-fact__ico{display:grid; place-items:center; width:48px; height:48px; flex:0 0 48px; border-radius:14px; background:var(--pck-ice); color:var(--pck-navy)}
+#pck-webinar .pck-fact small{display:block; font-size:13px; line-height:1.2; color:var(--pck-muted)}
+#pck-webinar .pck-fact strong{display:block; font-size:17px; line-height:1.3}
+/* ---------- Probleem ---------- */
+#pck-webinar .pck-note{margin-top:28px; padding:6px 0 6px 18px; border-left:4px solid var(--pck-magenta); color:var(--pck-navy); font-size:19px; font-weight:700; line-height:1.45}
+#pck-webinar .pck-inbox{padding:20px; border-radius:var(--pck-radius); background:#fff; box-shadow:var(--pck-shadow)}
+#pck-webinar .pck-inbox__head{display:flex; align-items:center; gap:10px; padding:4px 4px 14px; border-bottom:1px solid var(--pck-line); font-size:14px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-inbox__head svg{width:20px; height:20px; color:var(--pck-blue)}
+#pck-webinar .pck-inbox__head .pck-pill{background:var(--pck-magenta); color:#fff}
+#pck-webinar .pck-inbox li{display:flex; align-items:center; gap:12px; padding:13px 4px; border-bottom:1px solid #edf2f6; font-size:14px; line-height:1.35}
+#pck-webinar .pck-inbox li:last-child{border-bottom:0; padding-bottom:4px}
+#pck-webinar .pck-inbox li > svg{width:20px; height:20px; color:var(--pck-muted)}
+#pck-webinar .pck-inbox li span:not(.pck-pill){display:flex; flex-direction:column; min-width:0}
+#pck-webinar .pck-inbox li small{color:var(--pck-muted); font-size:12px}
+#pck-webinar .pck-cards3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; margin-top:64px}
+#pck-webinar .pck-card{padding:32px; border-radius:var(--pck-radius); background:#fff}
+#pck-webinar .pck-card p:not(.pck-code){color:var(--pck-muted)}
+#pck-webinar .pck-sec--white .pck-card{background:var(--pck-ice)}
+/* ---------- Documenten ---------- */
+#pck-webinar .pck-chips{display:flex; flex-wrap:wrap; gap:12px}
+#pck-webinar .pck-chips li{display:inline-flex; align-items:center; gap:10px; padding:12px 18px 12px 14px; border:1px solid var(--pck-line); border-radius:999px; background:#fff; font-size:16px; font-weight:700; line-height:1.2; box-shadow:0 8px 20px -14px rgba(12,63,108,.45)}
+#pck-webinar .pck-chips li svg{width:20px; height:20px; color:var(--pck-blue)}
+#pck-webinar .pck-chips li.is-more{border-style:dashed; background:transparent; box-shadow:none; color:var(--pck-muted)}
+#pck-webinar .pck-sub{margin-top:18px; color:var(--pck-navy); font-weight:700}
+/* ---------- Zo werkt het ---------- */
+#pck-webinar .pck-steps4{position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:24px; counter-reset:none}
+#pck-webinar .pck-steps4::before{content:""; position:absolute; top:28px; left:12%; right:12%; height:2px; background:linear-gradient(90deg,var(--pck-blue),var(--pck-magenta)); opacity:.5}
+#pck-webinar .pck-step{position:relative; padding:0 8px; text-align:center}
+#pck-webinar .pck-step__num{display:grid; place-items:center; width:56px; height:56px; margin:0 auto 20px; border:4px solid var(--pck-ice); border-radius:50%; background:var(--pck-navy); color:#fff; font-size:20px; font-weight:700; line-height:1}
+#pck-webinar .pck-step p:not(.pck-code){color:var(--pck-muted); font-size:16px}
+#pck-webinar .pck-compare-head{margin:88px auto 32px; text-align:center}
+#pck-webinar .pck-compare-head .pck-h3{font-size:clamp(24px,2.4vw,32px)}
+#pck-webinar .pck-compare-head p{color:var(--pck-muted)}
+#pck-webinar .pck-compare{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px}
+#pck-webinar .pck-compare__col{padding:32px; border-radius:var(--pck-radius); background:#fff}
+#pck-webinar .pck-compare__col--new{background:var(--pck-grad-card); color:#fff}
+#pck-webinar .pck-compare__title{display:flex; align-items:center; gap:10px; margin-bottom:18px; font-size:18px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-compare__title small{font-size:14px; font-weight:400; opacity:.8}
+#pck-webinar .pck-timeline li{position:relative; display:flex; justify-content:space-between; gap:16px; padding:14px 0 14px 30px; border-bottom:1px solid var(--pck-line); line-height:1.35}
+#pck-webinar .pck-compare__col--new .pck-timeline li{border-bottom-color:rgba(255,255,255,.18)}
+#pck-webinar .pck-timeline li:last-child{border-bottom:0}
+#pck-webinar .pck-timeline li::before{content:""; position:absolute; left:4px; top:50%; width:12px; height:12px; margin-top:-6px; border-radius:50%; background:var(--pck-magenta)}
+#pck-webinar .pck-compare__col--new .pck-timeline li::before{background:var(--pck-green)}
+#pck-webinar .pck-timeline em{font-weight:700; white-space:nowrap}
+#pck-webinar .pck-timeline li.is-last{font-weight:700}
+#pck-webinar .pck-compare__col--old .pck-timeline li.is-last em{color:var(--pck-magenta)}
+#pck-webinar .pck-compare__col--new .pck-timeline li.is-last em{color:var(--pck-green)}
+#pck-webinar .pck-kpis{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; margin-top:24px}
+#pck-webinar .pck-kpis li{display:flex; align-items:flex-start; gap:12px; padding:20px 22px; border-radius:18px; background:#fff; line-height:1.4}
+#pck-webinar .pck-kpis li svg{margin-top:1px; color:var(--pck-green); stroke-width:2.4}
+#pck-webinar .pck-kpis small{display:block; color:var(--pck-muted); font-size:14px}
+#pck-webinar .pck-tagline{margin-top:40px; text-align:center; color:var(--pck-navy); font-size:20px; font-weight:700}
+/* ---------- Resultaat (donker) ---------- */
+#pck-webinar .pck-benefits{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px}
+#pck-webinar .pck-benefit{padding:36px 32px; border:1px solid rgba(255,255,255,.2); border-radius:var(--pck-radius); background:rgba(255,255,255,.07); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px)}
+#pck-webinar .pck-benefit .pck-code{color:#7fd3f7}
+#pck-webinar .pck-big{margin-bottom:12px; font-size:clamp(28px,2.5vw,36px); font-weight:700; line-height:1.1; color:#fff}
+#pck-webinar .pck-benefit p:last-child{color:rgba(255,255,255,.84)}
+#pck-webinar .pck-foot{margin-top:40px; text-align:center; font-size:20px; font-weight:700}
+/* ---------- Veilig binnen Microsoft ---------- */
+#pck-webinar .pck-checks{display:grid; gap:12px; margin-top:28px}
+#pck-webinar .pck-checks li{display:flex; align-items:center; gap:12px; font-weight:700; line-height:1.4}
+#pck-webinar .pck-checks li svg{width:26px; height:26px; padding:5px; border-radius:50%; background:var(--pck-green); color:#fff; stroke-width:3}
+#pck-webinar .pck-tenant{position:relative; padding:28px; border:2px dashed #9dbad3; border-radius:32px; background:var(--pck-ice)}
+#pck-webinar .pck-tenant__label{display:flex; align-items:center; gap:10px; margin-bottom:18px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-tenant__label svg{color:var(--pck-blue)}
+#pck-webinar .pck-tenant__app{padding:24px; border-radius:22px; background:var(--pck-grad-card); color:#fff; box-shadow:var(--pck-shadow)}
+#pck-webinar .pck-tenant__title{display:flex; align-items:center; gap:10px; margin-bottom:16px; font-size:20px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-tenant__title svg{color:#7fd3f7}
+#pck-webinar .pck-tenant__grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+#pck-webinar .pck-tenant__grid div{display:flex; align-items:center; gap:8px; padding:12px; border:1px solid rgba(255,255,255,.22); border-radius:12px; background:rgba(255,255,255,.08); font-size:14px; line-height:1.3}
+#pck-webinar .pck-tenant__grid svg{width:18px; height:18px; color:var(--pck-green)}
+#pck-webinar .pck-tenant__data{display:flex; align-items:center; justify-content:center; gap:10px; margin-top:14px; padding:12px; border-radius:12px; background:#fff; color:var(--pck-navy); font-size:15px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-tenant__data svg{width:20px; height:20px; color:var(--pck-blue)}
+/* ---------- Programma & voor wie ---------- */
+#pck-webinar .pck-split--top{align-items:start}
+#pck-webinar .pck-agenda{display:grid; gap:14px; margin-top:32px}
+#pck-webinar .pck-agenda li{display:flex; gap:18px; padding:20px 22px; border-radius:18px; background:#fff}
+#pck-webinar .pck-agenda__num{display:grid; place-items:center; width:40px; height:40px; flex:0 0 40px; border-radius:12px; background:var(--pck-navy); color:#fff; font-weight:700; line-height:1}
+#pck-webinar .pck-agenda__title{display:block; margin-bottom:2px; font-size:18px; line-height:1.35}
+#pck-webinar .pck-agenda p{color:var(--pck-muted); font-size:16px; line-height:1.55}
+#pck-webinar .pck-who{position:relative; overflow:hidden; padding:40px; border-radius:var(--pck-radius); background:var(--pck-grad-card); color:#fff}
+#pck-webinar .pck-who .pck-h3{font-size:26px; margin-bottom:22px}
+#pck-webinar .pck-who .pck-checks{margin:0 0 32px}
+#pck-webinar .pck-who .pck-checks li{align-items:flex-start; font-weight:400}
+#pck-webinar .pck-who .pck-checks li svg{margin-top:0}
+#pck-webinar .pck-who .pck-circle{width:240px; height:240px; right:-120px; bottom:-120px}
+/* ---------- Aanmelden ---------- */
+#pck-webinar .pck-signup .pck-split{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); align-items:start}
+#pck-webinar .pck-eyebrow--light{color:#7fd3f7}
+#pck-webinar .pck-signup__facts{display:grid; gap:14px; margin-top:32px}
+#pck-webinar .pck-signup__facts li{display:flex; align-items:center; gap:14px; font-size:18px; line-height:1.35}
+#pck-webinar .pck-signup__facts svg{width:44px; height:44px; padding:11px; border-radius:12px; background:rgba(255,255,255,.12); color:#7fd3f7}
+#pck-webinar .pck-formcard{position:relative; z-index:1; scroll-margin-top:140px; padding:40px; border-radius:var(--pck-radius); background:#fff; color:var(--pck-navy); box-shadow:0 40px 80px -30px rgba(0,0,0,.55)}
+#pck-webinar .pck-formcard__title{margin-bottom:6px; font-size:26px; font-weight:700; line-height:1.25}
+#pck-webinar .pck-formcard__intro{margin-bottom:26px; color:var(--pck-muted); font-size:16px}
+#pck-webinar .pck-form{display:grid; gap:18px}
+#pck-webinar .pck-grid2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px}
+#pck-webinar .pck-field{display:flex; flex-direction:column; gap:6px; min-width:0}
+#pck-webinar .pck-field label, #pck-webinar .pck-fieldset legend{display:block; margin:0; padding:0; color:var(--pck-navy); font-size:15px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-req{color:var(--pck-magenta)}
+#pck-webinar .pck-opt{color:var(--pck-muted); font-weight:400}
+#pck-webinar .pck-field input, #pck-webinar .pck-field select, #pck-webinar .pck-field textarea{display:block; width:100%; height:auto; min-height:0; margin:0; padding:14px 16px; border:1.5px solid var(--pck-line); border-radius:10px; background:#f8fbfd; color:var(--pck-navy); font:inherit; font-size:16px; line-height:1.3; box-shadow:none; outline:0; -webkit-appearance:none; appearance:none; transition:border-color .15s ease, box-shadow .15s ease, background-color .15s ease}
+#pck-webinar .pck-field input::placeholder{color:#8aa3ba; opacity:1}
+#pck-webinar .pck-field input:focus{border-color:var(--pck-blue); background:#fff; box-shadow:0 0 0 4px rgba(0,159,227,.15)}
+#pck-webinar .pck-field.is-error input{border-color:var(--pck-magenta); background:#fdf5f8}
+#pck-webinar .pck-errmsg{display:none; color:var(--pck-magenta); font-size:13px; font-weight:700; line-height:1.3}
+#pck-webinar .is-error .pck-errmsg{display:block}
+#pck-webinar .pck-fieldset{min-width:0}
+#pck-webinar .pck-fieldset legend{margin-bottom:10px}
+#pck-webinar .pck-choices{display:flex; flex-wrap:wrap; gap:8px}
+#pck-webinar .pck-choice{position:relative; display:inline-flex; margin:0; cursor:pointer}
+#pck-webinar .pck-choice input{position:absolute; opacity:0; width:1px; height:1px; margin:0}
+#pck-webinar .pck-choice span{display:inline-block; padding:9px 14px; border:1.5px solid var(--pck-line); border-radius:999px; background:#f8fbfd; color:var(--pck-navy); font-size:14px; font-weight:700; line-height:1.2; transition:all .15s ease; user-select:none}
+#pck-webinar .pck-choice:hover span{border-color:var(--pck-blue)}
+#pck-webinar .pck-choice input:checked + span{border-color:var(--pck-navy); background:var(--pck-navy); color:#fff}
+#pck-webinar .pck-choice input:focus-visible + span{outline:3px solid var(--pck-blue); outline-offset:2px}
+#pck-webinar .pck-consent{display:flex; align-items:flex-start; gap:12px; margin:0; color:var(--pck-muted); font-size:14px; font-weight:400; line-height:1.5; cursor:pointer}
+#pck-webinar .pck-consent input{flex:0 0 22px; width:22px; height:22px; margin:0; border:1.5px solid #9fb4c7; border-radius:6px; background:#fff center / 14px no-repeat; -webkit-appearance:none; appearance:none; cursor:pointer}
+#pck-webinar .pck-consent input:checked{border-color:var(--pck-navy); background-color:var(--pck-navy); background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E")}
+#pck-webinar .pck-consent input:focus-visible{outline:3px solid var(--pck-blue); outline-offset:2px}
+#pck-webinar .pck-consent a{color:var(--pck-navy); font-weight:700; text-decoration:underline}
+#pck-webinar .pck-consent.is-error input{border-color:var(--pck-magenta)}
+#pck-webinar .pck-consent-wrap .pck-errmsg{margin:6px 0 0 34px}
+#pck-webinar .pck-hp{position:absolute !important; left:-9999px; width:1px; height:1px; overflow:hidden}
+#pck-webinar .pck-form .pck-btn{padding:18px 28px; font-size:18px}
+#pck-webinar .pck-form .pck-btn.is-busy{opacity:.7; pointer-events:none}
+#pck-webinar .pck-status{display:none; padding:12px 14px; border-radius:10px; background:#fdf1f5; color:var(--pck-magenta); font-size:14px; font-weight:700; line-height:1.45}
+#pck-webinar .pck-status.is-visible{display:block}
+#pck-webinar .pck-micro{color:var(--pck-muted); font-size:14px; text-align:center}
+#pck-webinar .pck-success{display:none; padding:24px 0 8px; text-align:center}
+#pck-webinar .pck-formcard.is-done > .pck-formcard__title, #pck-webinar .pck-formcard.is-done > .pck-formcard__intro, #pck-webinar .pck-formcard.is-done > .pck-form{display:none}
+#pck-webinar .pck-formcard.is-done .pck-success{display:block}
+#pck-webinar .pck-success__ico{display:grid; place-items:center; width:72px; height:72px; margin:0 auto 20px; border-radius:50%; background:var(--pck-green); color:#fff}
+#pck-webinar .pck-success__ico svg{width:34px; height:34px; stroke-width:2.8}
+#pck-webinar .pck-success p{color:var(--pck-muted)}
+#pck-webinar .pck-success .pck-success__title{margin-bottom:8px; color:var(--pck-navy)}
+#pck-webinar .pck-success__title:focus{outline:0}
+/* Optioneel: eigen formulierplugin (Gravity Forms, Contact Form 7, WPForms) in de kaart, zie LEESMIJ.md */
+#pck-webinar .pck-plugin label, #pck-webinar .pck-plugin legend{display:block; margin:0 0 6px; color:var(--pck-navy); font-size:15px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-plugin input[type=text], #pck-webinar .pck-plugin input[type=email], #pck-webinar .pck-plugin input[type=tel], #pck-webinar .pck-plugin select, #pck-webinar .pck-plugin textarea{width:100%; margin:0 0 16px; padding:14px 16px; border:1.5px solid var(--pck-line); border-radius:10px; background:#f8fbfd; color:var(--pck-navy); font:inherit; font-size:16px; line-height:1.3; box-shadow:none}
+#pck-webinar .pck-plugin input:focus, #pck-webinar .pck-plugin select:focus, #pck-webinar .pck-plugin textarea:focus{border-color:var(--pck-blue); background:#fff; outline:0; box-shadow:0 0 0 4px rgba(0,159,227,.15)}
+#pck-webinar .pck-plugin input[type=submit], #pck-webinar .pck-plugin button[type=submit], #pck-webinar .pck-plugin .gform_button{width:100%; margin:8px 0 0; padding:18px 28px; border:0; border-radius:6px; background:var(--pck-green); color:#fff; font:inherit; font-size:18px; font-weight:700; line-height:1.2; text-transform:none; cursor:pointer}
+#pck-webinar .pck-plugin input[type=submit]:hover, #pck-webinar .pck-plugin button[type=submit]:hover, #pck-webinar .pck-plugin .gform_button:hover{background:var(--pck-green-dark)}
+/* ---------- AI Suite ---------- */
+#pck-webinar .pck-suite{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px}
+#pck-webinar .pck-suite .pck-card{position:relative; border:1.5px solid transparent}
+#pck-webinar .pck-suite .pck-card.is-current{border-color:var(--pck-blue); background:#fff; box-shadow:var(--pck-shadow)}
+#pck-webinar .pck-suite__ico{display:grid; place-items:center; width:52px; height:52px; margin-bottom:20px; border-radius:14px; background:var(--pck-navy); color:#fff}
+#pck-webinar .pck-suite .pck-pill{position:absolute; top:24px; right:24px; background:var(--pck-blue); color:#fff}
+/* ---------- FAQ ---------- */
+#pck-webinar .pck-faq{max-width:880px; margin:0 auto; display:grid; gap:12px}
+#pck-webinar .pck-faq details{border-radius:18px; background:#fff; overflow:hidden}
+#pck-webinar .pck-faq summary{position:relative; display:block; padding:22px 64px 22px 26px; font-size:18px; font-weight:700; line-height:1.4; cursor:pointer; list-style:none}
+#pck-webinar .pck-faq summary::-webkit-details-marker{display:none}
+#pck-webinar .pck-faq summary::marker{content:""}
+#pck-webinar .pck-faq summary::after{content:""; position:absolute; right:26px; top:50%; width:12px; height:12px; margin-top:-9px; border-right:2.5px solid var(--pck-blue); border-bottom:2.5px solid var(--pck-blue); transform:rotate(45deg); transition:transform .2s ease}
+#pck-webinar .pck-faq details[open] summary::after{transform:rotate(225deg); margin-top:-3px}
+#pck-webinar .pck-faq details p{padding:0 26px 24px; color:var(--pck-muted)}
+/* ---------- Slot-CTA ---------- */
+#pck-webinar .pck-final{position:relative; overflow:hidden; padding:80px 64px; border-radius:40px 40px 120px 40px; background:var(--pck-grad); color:#fff; text-align:center}
+#pck-webinar .pck-final .pck-h2{max-width:720px; margin-left:auto; margin-right:auto}
+#pck-webinar .pck-final__inner{position:relative; z-index:1}
+#pck-webinar .pck-final .pck-lead{max-width:620px; margin:0 auto 32px; color:rgba(255,255,255,.86)}
+#pck-webinar .pck-final .pck-btns{justify-content:center}
+#pck-webinar .pck-final__contact{margin-top:24px; color:rgba(255,255,255,.84); font-size:16px}
+#pck-webinar .pck-final__contact a{color:#fff; font-weight:700; text-decoration:underline; text-underline-offset:3px}
+#pck-webinar .pck-payoff{margin-top:48px; font-size:15px; font-weight:700; letter-spacing:.28em; color:#7fd3f7}
+#pck-webinar .pck-sign{display:flex; align-items:center; gap:16px; max-width:640px; margin:40px auto 0; color:var(--pck-muted); font-size:14px; white-space:nowrap}
+#pck-webinar .pck-sign::before, #pck-webinar .pck-sign::after{content:""; flex:1; height:1px; background:var(--pck-line)}
+/* ---------- Animatie hero-visual ---------- */
+@media (prefers-reduced-motion:no-preference){
+  #pck-webinar .pck-mock__steps li{animation:pckIn .55s cubic-bezier(.2,.7,.2,1) both}
+  #pck-webinar .pck-mock__steps li:nth-child(2){animation-delay:.35s}
+  #pck-webinar .pck-mock__steps li:nth-child(3){animation-delay:.7s}
+  #pck-webinar .pck-mock__steps li:nth-child(4){animation-delay:1.05s}
+  #pck-webinar .pck-mock__steps li:nth-child(5){animation-delay:1.4s}
+  #pck-webinar .pck-mock__done{animation:pckIn .55s 1.75s cubic-bezier(.2,.7,.2,1) both}
+}
+@keyframes pckIn{from{opacity:0; transform:translateX(16px)}to{opacity:1; transform:none}}
+/* ---------- Responsive ---------- */
+@media (max-width:1080px){
+  #pck-webinar .pck-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #pck-webinar .pck-facts__cta{grid-column:1 / -1}
+  #pck-webinar .pck-facts__cta .pck-btn{width:100%}
+  #pck-webinar .pck-steps4{grid-template-columns:repeat(2,minmax(0,1fr)); row-gap:48px}
+  #pck-webinar .pck-steps4::before{display:none}
+}
+@media (max-width:960px){
+  #pck-webinar .pck-sec{padding:80px 0}
+  #pck-webinar .pck-split, #pck-webinar .pck-hero .pck-split, #pck-webinar .pck-signup .pck-split{grid-template-columns:minmax(0,1fr); gap:48px}
+  #pck-webinar .pck-hero{padding:64px 0 160px; border-bottom-right-radius:64px}
+  #pck-webinar .pck-mock{max-width:560px}
+  #pck-webinar .pck-cards3, #pck-webinar .pck-benefits, #pck-webinar .pck-suite, #pck-webinar .pck-kpis{grid-template-columns:minmax(0,1fr)}
+  #pck-webinar .pck-compare{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  #pck-webinar{font-size:16px}
+  #pck-webinar .pck-wrap{padding:0 20px}
+  #pck-webinar .pck-sec{padding:64px 0}
+  #pck-webinar .pck-eyebrow{font-size:19px}
+  #pck-webinar .pck-lead{font-size:17px}
+  #pck-webinar .pck-hero{padding:48px 0 150px; border-bottom-right-radius:48px}
+  #pck-webinar .pck-btns .pck-btn{width:100%}
+  #pck-webinar .pck-mock{padding-right:0}
+  #pck-webinar .pck-mock__steps{position:static; flex-direction:row; flex-wrap:wrap; width:auto; margin-top:14px; transform:none}
+  #pck-webinar .pck-mock__steps li{flex:1 1 45%; font-size:13px}
+  #pck-webinar .pck-mock__steps li.is-final{flex-basis:100%}
+  #pck-webinar .pck-facts{grid-template-columns:minmax(0,1fr); gap:18px; padding:26px 22px}
+  #pck-webinar .pck-steps4{grid-template-columns:minmax(0,1fr); row-gap:36px}
+  #pck-webinar .pck-card, #pck-webinar .pck-compare__col, #pck-webinar .pck-benefit{padding:26px 22px}
+  #pck-webinar .pck-timeline li{flex-direction:column; gap:2px}
+  #pck-webinar .pck-formcard, #pck-webinar .pck-who{padding:28px 20px}
+  #pck-webinar .pck-grid2, #pck-webinar .pck-tenant__grid{grid-template-columns:minmax(0,1fr)}
+  #pck-webinar .pck-tenant{padding:18px}
+  #pck-webinar .pck-final{padding:56px 22px; border-radius:28px 28px 64px 28px}
+  #pck-webinar .pck-faq summary{padding:18px 52px 18px 20px; font-size:17px}
+  #pck-webinar .pck-faq details p{padding:0 20px 20px}
+  #pck-webinar .pck-circle{width:520px; height:520px}
+  #pck-webinar .pck-circle--br{right:-260px; bottom:-260px}
+  #pck-webinar .pck-circle--tr{right:-260px; top:-260px}
+  #pck-webinar .pck-circle--bl{left:-260px; bottom:-260px}
+  #pck-webinar .pck-circle--tl{left:-260px; top:-260px}
+  #pck-webinar .pck-signup .pck-circle{display:none}
+}
+</style>
+<div id="pck-webinar" data-webinar="Webinar AI Capture Studio voor Logistiek &amp; Transport" data-datum="[DATUM]" data-tijd="[TIJD]">
+<section class="pck-hero">
+<div class="pck-circle pck-circle--white pck-circle--br" aria-hidden="true"></div>
+<div class="pck-wrap pck-split">
+<div>
+<p class="pck-eyebrow">Gratis webinar voor logistiek &amp; transport</p>
+<h1 class="pck-h1">Van mailbox naar TMS. Zonder overtypen.</h1>
+<p class="pck-lead">Transportopdrachten, CMR-vrachtbrieven, afleverbewijzen en inkoopfacturen. Ze komen elke dag binnen via de mail, en elke dag typt iemand ze met de hand over. In dit gratis webinar laten we live zien hoe <strong>AI Capture Studio</strong> die documenten automatisch uitleest, controleert en klaarzet in je TMS, WMS of ERP.</p>
+<ul class="pck-meta">
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>[DATUM]</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>[TIJD]</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M8.5 21h7M12 17v4"/></svg>Online &amp; live</li>
+</ul>
+<div class="pck-btns"><a class="pck-btn" href="#aanmelden">Meld je gratis aan <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="pck-btn pck-btn--ghost" href="#programma">Bekijk het programma</a></div>
+</div>
+<div class="pck-mock" aria-hidden="true">
+<div class="pck-mock__card">
+<div class="pck-mock__bar"><span class="pck-mock__dot"></span><span class="pck-mock__dot"></span><span class="pck-mock__dot"></span><span class="pck-mock__app">AI CAPTURE STUDIO</span></div>
+<div class="pck-mock__mail"><span class="pck-mock__ico"><svg viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5M8.5 13h7M8.5 17h5"/></svg></span><span class="pck-mock__meta"><strong>Transportopdracht TR-45231</strong><small>planning@jouwbedrijf.nl · PDF-bijlage</small></span></div>
+<div class="pck-mock__label"><span>Velden herkend en gescoord</span><span class="pck-pill pck-pill--ok">Uitgelezen</span></div>
+<ul class="pck-mock__fields">
+<li><span>Ordernummer</span><strong>TR-45231</strong><em>0,98</em></li>
+<li><span>Laadadres</span><strong>Veenendaal</strong><em>0,97</em></li>
+<li><span>Losadres</span><strong>Rotterdam</strong><em>0,96</em></li>
+<li><span>Laaddatum</span><strong>14-10-2026</strong><em>0,96</em></li>
+<li><span>Aantal pallets</span><strong>24</strong><em>0,94</em></li>
+</ul>
+<div class="pck-mock__done"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Doorgezet naar je TMS</div>
+</div>
+<ol class="pck-mock__steps">
+<li>Document komt binnen<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
+<li>Wordt uitgelezen<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
+<li>Gegevens herkend<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
+<li>Gevalideerd<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
+<li class="is-final">Klaar in je TMS<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
+</ol>
+</div>
+</div>
+</section>
+<div class="pck-facts-wrap">
+<div class="pck-wrap">
+<div class="pck-facts">
+<p class="pck-facts__title">Het webinar in het kort</p>
+<div class="pck-fact"><span class="pck-fact__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg></span><span><small>Datum</small><strong>[DATUM]</strong></span></div>
+<div class="pck-fact"><span class="pck-fact__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span><span><small>Tijd</small><strong>[TIJD]</strong></span></div>
+<div class="pck-fact"><span class="pck-fact__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M8.5 21h7M12 17v4"/></svg></span><span><small>Waar</small><strong>Online, live</strong></span></div>
+<div class="pck-fact"><span class="pck-fact__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 13.5l-7 7a2 2 0 0 1-2.8 0L3 12.8V3h9.8l7.7 7.7a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></span><span><small>Kosten</small><strong>Gratis</strong></span></div>
+<div class="pck-facts__cta"><a class="pck-btn" href="#aanmelden">Reserveer je plek</a></div>
+</div>
+</div>
+</div>
+<section class="pck-sec pck-sec--ice">
+<div class="pck-wrap">
+<div class="pck-split">
+<div>
+<p class="pck-eyebrow">Herkenbaar?</p>
+<h2 class="pck-h2">Je mailbox loopt sneller vol dan je team kan typen</h2>
+<p class="pck-lead">In logistiek draait alles om snelheid en betrouwbaarheid. Toch gaat er nog verrassend veel tijd zitten in het handmatig verwerken van documenten.</p>
+<p class="pck-note">Elk document dat een mens moet overtypen, kost tijd en brengt risico mee.</p>
+</div>
+<div class="pck-inbox" aria-hidden="true">
+<div class="pck-inbox__head"><svg viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 6.5l9 6.5 9-6.5"/></svg>Postvak · planning@jouwbedrijf.nl<span class="pck-pill">37 nieuw</span></div>
+<ul>
+<li><svg viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg><span><strong>Transportopdracht 45231</strong><small>PDF-bijlage</small></span><span class="pck-pill pck-pill--wait">Onbehandeld</span></li>
+<li><svg viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg><span><strong>CMR-vrachtbrief 88213</strong><small>Scan, PDF</small></span><span class="pck-pill pck-pill--wait">Onbehandeld</span></li>
+<li><svg viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg><span><strong>Factuur charter 2026-0881</strong><small>PDF-bijlage</small></span><span class="pck-pill pck-pill--wait">Onbehandeld</span></li>
+<li><svg viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg><span><strong>Afleverbewijs zending 7712</strong><small>Foto van chauffeur</small></span><span class="pck-pill pck-pill--check">In controle</span></li>
+<li><svg viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg><span><strong>Tariefaanvraag nieuwe klant</strong><small>Excel-bijlage</small></span><span class="pck-pill pck-pill--wait">Onbehandeld</span></li>
+</ul>
+</div>
+</div>
+<div class="pck-cards3">
+<div class="pck-card"><p class="pck-code">//_01</p><h3 class="pck-h3">Overtypen</h3><p>Transportopdrachten en orderbevestigingen komen binnen als PDF of mailtekst. Regel voor regel gaan ze met de hand in je TMS of ERP.</p></div>
+<div class="pck-card"><p class="pck-code">//_02</p><h3 class="pck-h3">Fouten en naslag</h3><p>Een verkeerd losadres, een afwijkend tarief of een gemiste referentie. Het valt pas op als de vracht al onderweg is of de factuur al is betaald.</p></div>
+<div class="pck-card"><p class="pck-code">//_03</p><h3 class="pck-h3">Piekdrukte</h3><p>Seizoenspiek, Q4 of de maandafsluiting: meer zendingen betekent direct meer documenten, en dus meer uren.</p></div>
+</div>
+</div>
+</section>
+<section class="pck-sec pck-sec--white">
+<div class="pck-circle pck-circle--grad pck-circle--tr" aria-hidden="true"></div>
+<div class="pck-wrap pck-split">
+<div>
+<p class="pck-eyebrow">Bijna ieder document</p>
+<h2 class="pck-h2">Gemaakt voor de documentstroom van logistiek en transport</h2>
+<p class="pck-lead">AI Capture Studio leest bijna iedere documentsoort uit en haalt er gestructureerde gegevens uit.</p>
+<p class="pck-sub">Komt er een nieuwe documentsoort bij? Die stel je in, je hoeft niets te laten bouwen.</p>
+</div>
+<ul class="pck-chips">
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Transportopdrachten</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Orderbevestigingen</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>CMR-vrachtbrieven</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Afleverbewijzen (POD)</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Pakbonnen</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Inkoopfacturen van vervoerders</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Douanedocumenten</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Weegbonnen</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Tariefaanvragen</li>
+<li class="is-more">En meer</li>
+</ul>
+</div>
+</section>
+<section class="pck-sec pck-sec--ice" id="zo-werkt-het">
+<div class="pck-wrap">
+<div class="pck-head pck-head--center">
+<p class="pck-eyebrow">Zo werkt AI Capture Studio</p>
+<h2 class="pck-h2">Van inkomende mail naar verwerkte data in vier stappen</h2>
+<p class="pck-lead">Volledig geautomatiseerd, met een controlemoment waar jij dat wilt.</p>
+</div>
+<ol class="pck-steps4">
+<li class="pck-step"><span class="pck-step__num">1</span><p class="pck-code">//_01</p><h3 class="pck-h3">Mail komt binnen</h3><p>Inkomende mail wordt gelezen, geclassificeerd en naar de juiste map of mailbox gezet.</p></li>
+<li class="pck-step"><span class="pck-step__num">2</span><p class="pck-code">//_02</p><h3 class="pck-h3">Document uitgelezen</h3><p>Transportopdracht, vrachtbrief, factuur of aanvraag: de AI herkent de relevante gegevens.</p></li>
+<li class="pck-step"><span class="pck-step__num">3</span><p class="pck-code">//_03</p><h3 class="pck-h3">Gegevens gevalideerd</h3><p>Herkende velden komen in beeld. Waar nodig controleert een medewerker ze voordat ze definitief zijn.</p></li>
+<li class="pck-step"><span class="pck-step__num">4</span><p class="pck-code">//_04</p><h3 class="pck-h3">Klaar voor je systemen</h3><p>Gevalideerde data landt in Dataverse en stroomt door naar je TMS, WMS, ERP of boekhouding.</p></li>
+</ol>
+<div class="pck-compare-head">
+<h3 class="pck-h3">Van dagen naar minuten</h3>
+<p>Voorbeeld: een transportopdracht die per mail binnenkomt.</p>
+</div>
+<div class="pck-compare">
+<div class="pck-compare__col pck-compare__col--old">
+<p class="pck-compare__title">Vandaag <small>· handmatig</small></p>
+<ul class="pck-timeline">
+<li><span>Mail binnen</span><em>0 min</em></li>
+<li><span>Bijlage openen</span><em>+10 min</em></li>
+<li><span>Regel voor regel vergelijken</span><em>+40 min</em></li>
+<li class="is-last"><span>Overtypen in TMS of ERP</span><em>uren tot dagen</em></li>
+</ul>
+</div>
+<div class="pck-compare__col pck-compare__col--new">
+<p class="pck-compare__title">Met AI Capture Studio <small>· geautomatiseerd</small></p>
+<ul class="pck-timeline">
+<li><span>Mail binnen</span><em>0 min</em></li>
+<li><span>Automatisch uitgelezen</span><em>+1 min</em></li>
+<li><span>Validatie in beeld</span><em>+2 min</em></li>
+<li class="is-last"><span>Klaar in TMS of ERP</span><em>klaar</em></li>
+</ul>
+</div>
+</div>
+<ul class="pck-kpis">
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><strong>Doorlooptijd</strong><small>Van dagen naar minuten</small></span></li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><strong>Kwaliteit</strong><small>Afwijkingen direct in beeld</small></span></li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><strong>Capaciteit</strong><small>Geen extra uren bij piek</small></span></li>
+</ul>
+<p class="pck-tagline">Werkt dag en nacht, nooit ziek, altijd vrolijk.</p>
+</div>
+</section>
+<section class="pck-sec pck-sec--dark">
+<div class="pck-circle pck-circle--white pck-circle--bl" aria-hidden="true"></div>
+<div class="pck-wrap">
+<div class="pck-head pck-head--center">
+<p class="pck-eyebrow pck-eyebrow--light">Wat het oplevert</p>
+<h2 class="pck-h2">Sneller, consistenter, schaalbaar</h2>
+</div>
+<div class="pck-benefits">
+<div class="pck-benefit"><p class="pck-code">//_01 · SNELLER</p><p class="pck-big">Minuten</p><p>Documenten worden automatisch uitgelezen, zonder handwerk. Je planners houden tijd over voor waar ze goed in zijn: plannen.</p></div>
+<div class="pck-benefit"><p class="pck-code">//_02 · CONSISTENTER</p><p class="pck-big">Eén set regels</p><p>Elk document wordt volgens dezelfde regels afgehandeld, ongeacht wie er dienst heeft.</p></div>
+<div class="pck-benefit"><p class="pck-code">//_03 · SCHAALBAAR</p><p class="pck-big">Geen extra fte</p><p>Piekdrukte kost geen extra capaciteit. Groeien zonder extra personeel, juist nu goede mensen in de logistiek schaars zijn.</p></div>
+</div>
+<p class="pck-foot">Dezelfde kwaliteit bij 10 of 1.000 documenten per week.</p>
+</div>
+</section>
+<section class="pck-sec pck-sec--white">
+<div class="pck-wrap pck-split">
+<div>
+<p class="pck-eyebrow">Veilig en beheersbaar</p>
+<h2 class="pck-h2">AI, veilig uitgerold binnen je eigen Microsoft-omgeving</h2>
+<p class="pck-lead">AI Capture Studio draait binnen de Microsoft-omgeving. Eén omgeving met rollen, rechten en vangrails. Schaalbaar van één afdeling tot de hele organisatie.</p>
+<ul class="pck-checks">
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Rollen en rechten per gebruiker</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Vangrails per documentsoort</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Validatie door de mens waar nodig</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Audittrail per document</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Je data blijft in je eigen tenant</li>
+</ul>
+</div>
+<div class="pck-tenant" aria-hidden="true">
+<p class="pck-tenant__label"><svg viewBox="0 0 24 24"><rect x="4" y="10.5" width="16" height="11" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>Jouw Microsoft-omgeving</p>
+<div class="pck-tenant__app">
+<p class="pck-tenant__title"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>AI Capture Studio</p>
+<div class="pck-tenant__grid">
+<div><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M21.5 20c0-2.9-1.8-5-4.5-5.7"/></svg>Rollen &amp; rechten</div>
+<div><svg viewBox="0 0 24 24"><path d="M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6z"/></svg>Vangrails</div>
+<div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Menselijke validatie</div>
+<div><svg viewBox="0 0 24 24"><path d="M9 5h11M9 12h11M9 19h11M4 5h.01M4 12h.01M4 19h.01"/></svg>Audittrail</div>
+</div>
+<div class="pck-tenant__data"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>Dataverse: je data blijft in je eigen tenant</div>
+</div>
+</div>
+</div>
+</section>
+<section class="pck-sec pck-sec--ice" id="programma">
+<div class="pck-wrap pck-split pck-split--top">
+<div>
+<p class="pck-eyebrow">Het webinar</p>
+<h2 class="pck-h2">Wat je leert in dit webinar</h2>
+<ol class="pck-agenda">
+<li><div class="pck-agenda__num">1</div><div><h3 class="pck-agenda__title">Waar de uren zitten</h3><p>De documentstroom in logistiek en transport, van transportopdracht tot factuur.</p></div></li>
+<li><div class="pck-agenda__num">2</div><div><h3 class="pck-agenda__title">Live demo</h3><p>We volgen een transportopdracht van mailbox tot TMS, inclusief validatie.</p></div></li>
+<li><div class="pck-agenda__num">3</div><div><h3 class="pck-agenda__title">Veilig en beheersbaar</h3><p>Rollen, rechten, audittrail en je data in je eigen Microsoft-tenant.</p></div></li>
+<li><div class="pck-agenda__num">4</div><div><h3 class="pck-agenda__title">Zo start je</h3><p>De eerste documentstroom als pilot, en hoe je daarna uitbreidt naar volgende processen.</p></div></li>
+<li><div class="pck-agenda__num">5</div><div><h3 class="pck-agenda__title">Stel je vragen</h3><p>Live aan onze specialisten.</p></div></li>
+</ol>
+</div>
+<div class="pck-who">
+<div class="pck-circle pck-circle--white" aria-hidden="true"></div>
+<h3 class="pck-h3">Voor wie?</h3>
+<ul class="pck-checks">
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Directie en operationeel managers van transport- en logistieke bedrijven</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Teamleiders planning, order-entry en customer service</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Finance en crediteurenadministratie</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>IT- en digitaliseringsverantwoordelijken</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Verladers en warehouses met een eigen logistieke afdeling</li>
+</ul>
+<div class="pck-btns"><a class="pck-btn" href="#aanmelden">Meld je gratis aan <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</div>
+</div>
+</section>
+<section class="pck-sec pck-sec--dark pck-signup" id="aanmelden">
+<div class="pck-circle pck-circle--white pck-circle--tr" aria-hidden="true"></div>
+<div class="pck-wrap pck-split">
+<div>
+<p class="pck-eyebrow pck-eyebrow--light">Gratis aanmelden</p>
+<h2 class="pck-h2">Reserveer je plek</h2>
+<p class="pck-lead">Meld je aan en ontvang de deelnamelink per e-mail. Kun je er niet live bij zijn? Meld je dan toch aan. Je ontvangt na afloop de opname.</p>
+<ul class="pck-signup__facts">
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>[DATUM]</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>[TIJD]</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M8.5 21h7M12 17v4"/></svg>Online en live</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 13.5l-7 7a2 2 0 0 1-2.8 0L3 12.8V3h9.8l7.7 7.7a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>Gratis</li>
+</ul>
+</div>
+<div class="pck-formcard" id="pck-formcard">
+<p class="pck-formcard__title">Ja, ik ben erbij</p>
+<p class="pck-formcard__intro">Vul je gegevens in. Velden met een <span class="pck-req">*</span> zijn verplicht.</p>
+<form class="pck-form" id="pck-form" method="post" action="#aanmelden">
+<div class="pck-grid2">
+<div class="pck-field"><label for="pck-voornaam">Voornaam <span class="pck-req">*</span></label><input id="pck-voornaam" name="voornaam" type="text" autocomplete="given-name" required><span class="pck-errmsg">Vul je voornaam in.</span></div>
+<div class="pck-field"><label for="pck-achternaam">Achternaam <span class="pck-req">*</span></label><input id="pck-achternaam" name="achternaam" type="text" autocomplete="family-name" required><span class="pck-errmsg">Vul je achternaam in.</span></div>
+</div>
+<div class="pck-field"><label for="pck-email">Zakelijk e-mailadres <span class="pck-req">*</span></label><input id="pck-email" name="email" type="email" autocomplete="email" placeholder="naam@bedrijf.nl" required><span class="pck-errmsg">Vul een geldig e-mailadres in.</span></div>
+<div class="pck-grid2">
+<div class="pck-field"><label for="pck-bedrijf">Bedrijfsnaam <span class="pck-req">*</span></label><input id="pck-bedrijf" name="bedrijf" type="text" autocomplete="organization" required><span class="pck-errmsg">Vul je bedrijfsnaam in.</span></div>
+<div class="pck-field"><label for="pck-functie">Functie</label><input id="pck-functie" name="functie" type="text" autocomplete="organization-title"></div>
+</div>
+<div class="pck-field"><label for="pck-telefoon">Telefoonnummer <span class="pck-opt">(optioneel)</span></label><input id="pck-telefoon" name="telefoon" type="tel" autocomplete="tel"></div>
+<fieldset class="pck-fieldset">
+<legend>Welke documenten kosten jullie nu de meeste tijd? <span class="pck-opt">(optioneel)</span></legend>
+<div class="pck-choices"><label class="pck-choice"><input class="pck-doc" type="checkbox" value="Transportopdrachten"><span>Transportopdrachten</span></label><label class="pck-choice"><input class="pck-doc" type="checkbox" value="CMR's en afleverbewijzen"><span>CMR's en afleverbewijzen</span></label><label class="pck-choice"><input class="pck-doc" type="checkbox" value="Inkoopfacturen"><span>Inkoopfacturen</span></label><label class="pck-choice"><input class="pck-doc" type="checkbox" value="Douanedocumenten"><span>Douanedocumenten</span></label><label class="pck-choice"><input class="pck-doc" type="checkbox" value="Anders"><span>Anders</span></label></div>
+</fieldset>
+<div class="pck-consent-wrap">
+<label class="pck-consent"><input id="pck-akkoord" name="akkoord" type="checkbox" required><span>Ik ga akkoord met de verwerking van mijn gegevens volgens de <a href="/privacyverklaring/" target="_blank" rel="noopener">privacyverklaring</a> van Peacock. <span class="pck-req">*</span></span></label><span class="pck-errmsg">Geef toestemming om je aan te melden.</span>
+</div>
+<div class="pck-hp" aria-hidden="true"><label for="pck-website">Laat dit veld leeg</label><input id="pck-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+<div class="pck-submit"><button class="pck-btn pck-btn--block" type="submit">Ja, ik meld me aan</button></div>
+<div class="pck-status" role="alert"></div>
+<p class="pck-micro">Gratis · Binnen een minuut geregeld · Geen verplichtingen</p>
+</form>
+<div class="pck-success" role="status" aria-live="polite">
+<div class="pck-success__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+<p class="pck-formcard__title pck-success__title" tabindex="-1">Je bent aangemeld!</p>
+<p class="pck-success__text">Bedankt voor je aanmelding. We sturen de deelnamelink naar je e-mailadres.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="pck-sec pck-sec--white">
+<div class="pck-wrap">
+<div class="pck-head">
+<p class="pck-eyebrow">Onderdeel van de AI Suite</p>
+<h2 class="pck-h2">Van binnenkomende vrachtbrief tot uitgaande offerte</h2>
+<p class="pck-lead">AI Capture Studio is onderdeel van de breder inzetbare Document Intelligence Studio. Daarin zitten onder andere de Mail Agent en de AI Document Generator. Zo automatiseer je complete werkstromen van A tot Z.</p>
+</div>
+<div class="pck-suite">
+<div class="pck-card is-current"><div class="pck-pill">In dit webinar</div><div class="pck-suite__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5M8.5 13h7M8.5 17h5"/></svg></div><h3 class="pck-h3">AI Capture Studio</h3><p>Inkomende documenten automatisch uitgelezen en verwerkt.</p></div>
+<div class="pck-card"><div class="pck-suite__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 6.5l9 6.5 9-6.5"/></svg></div><h3 class="pck-h3">Mail Agent</h3><p>Inkomende mail gelezen, geclassificeerd en naar de juiste plek gezet.</p></div>
+<div class="pck-card"><div class="pck-suite__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></div><h3 class="pck-h3">AI Document Generator</h3><p>Offertes, contracten en rapporten in je eigen format. Van dagen schrijven naar minuten controleren.</p></div>
+</div>
+</div>
+</section>
+<section class="pck-sec pck-sec--ice">
+<div class="pck-wrap">
+<div class="pck-head pck-head--center">
+<p class="pck-eyebrow">Veelgestelde vragen</p>
+<h2 class="pck-h2">Goed om te weten</h2>
+</div>
+<div class="pck-faq">
+<details><summary>Wat kost het webinar?</summary><p>Niets. Deelname is gratis.</p></details>
+<details><summary>Moet ik iets installeren?</summary><p>Nee. Je ontvangt vooraf een link en volgt het webinar gewoon in je browser.</p></details>
+<details><summary>Ik kan er niet bij zijn. Wat nu?</summary><p>Meld je toch aan. Na afloop ontvang je de opname in je mailbox.</p></details>
+<details><summary>Werkt AI Capture Studio met ons TMS?</summary><p>AI Capture Studio zet de gegevens gestructureerd klaar in Dataverse. Van daaruit is de koppeling met je TMS, WMS, ERP of boekhouding een kleine stap. Twijfel je over jouw systeem? Stel je vraag tijdens het webinar.</p></details>
+<details><summary>Is onze data veilig?</summary><p>Ja. AI Capture Studio draait binnen je eigen Microsoft-omgeving, met rollen, rechten en een audittrail per document. Je data blijft in je eigen tenant.</p></details>
+<details><summary>Hoe snel kunnen we starten?</summary><p>Na een live demo met een van je eigen documenten richten we in twee tot vier weken de eerste documentstroom in als pilot. Daarna breid je stap voor stap uit.</p></details>
+</div>
+</div>
+</section>
+<section class="pck-sec pck-sec--white">
+<div class="pck-wrap">
+<div class="pck-final">
+<div class="pck-circle pck-circle--white pck-circle--br" aria-hidden="true"></div>
+<div class="pck-final__inner">
+<h2 class="pck-h2">Klaar om te stoppen met overtypen?</h2>
+<p class="pck-lead">Meld je aan voor het webinar en zie live hoe jouw documentstroom er straks uitziet.</p>
+<div class="pck-btns"><a class="pck-btn" href="#aanmelden">Meld je gratis aan <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+<p class="pck-final__contact">Liever direct sparren? Bel <a href="tel:+31318250220">+31 (0)318-250 220</a> of mail <a href="mailto:info@peacock-ia.nl">info@peacock-ia.nl</a></p>
+<p class="pck-payoff">FORGE YOUR FUTURE</p>
+</div>
+</div>
+<p class="pck-sign">Peacock • Intelligent Automation</p>
+</div>
+</section>
+<script>
+(function () {
+  "use strict";
+  /* ================= INSTELLINGEN ================= */
+  /* URL van je Power Automate-flow ("When a HTTP request is received") of een andere webhook.
+     Leeg laten = de aanmelding opent een vooraf ingevulde e-mail naar FALLBACK_EMAIL. Zie LEESMIJ.md. */
+  var ENDPOINT = "";
+  var FALLBACK_EMAIL = "info@peacock-ia.nl";
+  /* ================================================ */
+  var root = document.getElementById("pck-webinar");
+  var form = document.getElementById("pck-form");
+  var card = document.getElementById("pck-formcard");
+  if (!root || !form || !card) { return; }
+  var webinar = root.getAttribute("data-webinar") || "Webinar";
+  var datum = root.getAttribute("data-datum") || "";
+  var tijd = root.getAttribute("data-tijd") || "";
+  if (datum.indexOf("DATUM") !== -1 || tijd.indexOf("TIJD") !== -1) {
+    console.warn("Peacock webinar: vergeet [DATUM] en [TIJD] niet in te vullen.");
+  }
+  var button = form.querySelector("button");
+  var status = form.querySelector(".pck-status");
+  var emailPattern = /^\S+@\S+\.\S{2,}$/;
+  form.noValidate = true;
+  function field(name) { return form.elements.namedItem(name); }
+  function value(name) { var el = field(name); return el ? String(el.value || "").trim() : ""; }
+  function setError(el, isError) {
+    var wrap = el.closest(".pck-field") || el.closest(".pck-consent-wrap");
+    if (wrap) { wrap.classList.toggle("is-error", isError); }
+    var consent = el.closest(".pck-consent");
+    if (consent) { consent.classList.toggle("is-error", isError); }
+    el.setAttribute("aria-invalid", isError ? "true" : "false");
+  }
+  function validate() {
+    var firstInvalid = null;
+    var rules = [
+      { name: "voornaam", ok: value("voornaam") !== "" },
+      { name: "achternaam", ok: value("achternaam") !== "" },
+      { name: "email", ok: emailPattern.test(value("email")) },
+      { name: "bedrijf", ok: value("bedrijf") !== "" },
+      { name: "akkoord", ok: field("akkoord").checked }
+    ];
+    rules.forEach(function (rule) {
+      var el = field(rule.name);
+      setError(el, !rule.ok);
+      if (!rule.ok && !firstInvalid) { firstInvalid = el; }
+    });
+    if (firstInvalid) { firstInvalid.focus(); }
+    return !firstInvalid;
+  }
+  function collect() {
+    var docs = [];
+    form.querySelectorAll("input.pck-doc:checked").forEach(function (cb) { docs.push(cb.value); });
+    var qs = new URLSearchParams(window.location.search);
+    return {
+      webinar: webinar,
+      datum: datum,
+      tijd: tijd,
+      voornaam: value("voornaam"),
+      achternaam: value("achternaam"),
+      email: value("email"),
+      bedrijf: value("bedrijf"),
+      functie: value("functie"),
+      telefoon: value("telefoon"),
+      documenten: docs.join(", "),
+      akkoord_privacy: true,
+      pagina: window.location.origin + window.location.pathname,
+      utm_source: qs.get("utm_source") || "",
+      utm_medium: qs.get("utm_medium") || "",
+      utm_campaign: qs.get("utm_campaign") || "",
+      aangemeld_op: new Date().toISOString()
+    };
+  }
+  function showStatus(message) {
+    if (!status) { if (message) { window.alert(message); } return; }
+    status.textContent = message;
+    status.classList.toggle("is-visible", !!message);
+  }
+  function setBusy(isBusy) {
+    button.classList.toggle("is-busy", isBusy);
+    button.disabled = isBusy;
+    button.textContent = isBusy ? "Bezig met aanmelden..." : "Ja, ik meld me aan";
+  }
+  function track(data) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "webinar_aanmelding", webinar: data.webinar, bedrijf: data.bedrijf });
+  }
+  function showSuccess(data, viaMail) {
+    var title = card.querySelector(".pck-success__title");
+    var text = card.querySelector(".pck-success__text");
+    if (viaMail) {
+      title.textContent = "Nog één stap!";
+      text.textContent = "Je e-mailprogramma is geopend met je aanmelding. Verstuur die e-mail om je plek te bevestigen. Lukt dat niet? Mail je aanmelding naar " + FALLBACK_EMAIL + ".";
+    } else if (data) {
+      title.textContent = "Je bent aangemeld!";
+      text.textContent = "Bedankt, " + data.voornaam + ". We sturen de deelnamelink naar " + data.email + ". Tot dan!";
+    }
+    card.classList.add("is-done");
+    card.scrollIntoView({ behavior: "smooth", block: "start" });
+    title.focus({ preventScroll: true });
+  }
+  function sendByMail(data) {
+    var lines = [
+      "Graag meld ik me aan voor: " + data.webinar + " (" + data.datum + ", " + data.tijd + ").",
+      "",
+      "Naam: " + data.voornaam + " " + data.achternaam,
+      "E-mail: " + data.email,
+      "Bedrijf: " + data.bedrijf,
+      "Functie: " + data.functie,
+      "Telefoon: " + data.telefoon,
+      "Documenten die de meeste tijd kosten: " + data.documenten,
+      "",
+      "Ik ga akkoord met de verwerking van mijn gegevens volgens de privacyverklaring van Peacock."
+    ];
+    window.location.href = "mailto:" + FALLBACK_EMAIL +
+      "?subject=" + encodeURIComponent("Aanmelding " + data.webinar) +
+      "&body=" + encodeURIComponent(lines.join("\n"));
+    track(data);
+    showSuccess(data, true);
+  }
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    showStatus("");
+    if (value("website") !== "") { showSuccess(null, false); return; }
+    if (!validate()) { return; }
+    var data = collect();
+    if (!ENDPOINT) { sendByMail(data); return; }
+    setBusy(true);
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    }).then(function (response) {
+      if (!response.ok) { throw new Error("HTTP " + response.status); }
+      track(data);
+      showSuccess(data, false);
+    }).catch(function () {
+      setBusy(false);
+      showStatus("Er ging iets mis bij het versturen. Probeer het opnieuw of mail ons via " + FALLBACK_EMAIL + ".");
+    });
+  });
+  form.addEventListener("input", function (event) {
+    if (event.target.getAttribute("aria-invalid") === "true") { setError(event.target, false); }
+  });
+  form.addEventListener("change", function (event) {
+    if (event.target.getAttribute("aria-invalid") === "true") { setError(event.target, false); }
+  });
+})();
+</script>
+</div>

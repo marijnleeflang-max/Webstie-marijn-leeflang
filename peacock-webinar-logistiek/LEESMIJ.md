@@ -5,10 +5,14 @@
 | `1-tekst-landingspagina.md` | Alle teksten los, inclusief SEO-titel en metabeschrijving |
 | `2-wordpress-code.html` | De code die je in WordPress plakt (opmaak, pagina en formulier in één) |
 | `voorbeeld.html` | Voorbeeld om in je browser te openen. De header en footer zijn nagebootst. |
+| `kopieer-code.html` | **Makkelijkste manier:** open in je browser, vul datum en tijd in en klik op *Kopieer code* |
+| `2-wordpress-code.txt` | Dezelfde code als platte tekst, om te openen in Kladblok en te kopiëren |
 
 ---
 
 ## Stap 1: datum en tijd invullen
+
+> Gebruik je `kopieer-code.html`? Dan vul je datum en tijd daar in en kun je deze stap overslaan.
 
 Open `2-wordpress-code.html` in een teksteditor (Kladblok, TextEdit of VS Code) en gebruik **Zoeken en vervangen** (Ctrl+H):
 
