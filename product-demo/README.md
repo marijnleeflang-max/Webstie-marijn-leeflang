@@ -120,6 +120,21 @@ facturen, een rekeningoverzicht, een bonnetje en een contract.
 Lokaal bekijken: start in de hoofdmap van de repository `python3 -m http.server` en
 open `http://localhost:8000/product-demo/`.
 
+## Afbeelding voor de website
+
+`assets/ai-capture-studio-kantoor.jpg` (en `.webp`, kleiner) is een 1920×1080 sfeerbeeld:
+het kantoor uit de promovideo met collega's aan hun bureau, en op de voorgrond een curved
+monitor met het validatiescherm van de app. Het kantoor is een echt videobeeld; monitor,
+bureau en toetsenbord zijn in 3D gerenderd, met de app als haarscherp schermbeeld.
+
+```html
+<picture>
+  <source srcset="/product-demo/assets/ai-capture-studio-kantoor.webp" type="image/webp">
+  <img src="/product-demo/assets/ai-capture-studio-kantoor.jpg" width="1920" height="1080"
+       alt="Een collega werkt aan zijn bureau, op de voorgrond toont een curved monitor AI Capture Studio" loading="lazy">
+</picture>
+```
+
 ## Goed om te weten
 
 - Het is een simulatie met fictieve voorbeelddata. In "Zelf proberen" kiezen
