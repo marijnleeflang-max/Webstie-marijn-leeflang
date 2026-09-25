@@ -10,7 +10,7 @@ import base64
 import pathlib
 
 HERE = pathlib.Path(__file__).resolve().parent
-OUT = HERE / "document-automation-studio-demo.html"
+OUT = HERE / "ai-capture-studio-demo.html"
 
 html = (HERE / "index.html").read_text(encoding="utf-8")
 css = (HERE / "demo.css").read_text(encoding="utf-8")

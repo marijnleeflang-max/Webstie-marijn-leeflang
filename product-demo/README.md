@@ -1,4 +1,4 @@
-# Interactieve productdemo – Document Automation Studio
+# Interactieve productdemo – AI Capture Studio
 
 Een in code nagebouwde versie van de Document Understanding App. Er is geen video
 nodig: de demo speelt vanzelf een rondleiding af met een bewegende cursor, klikken,
@@ -14,10 +14,11 @@ klikken en zelf door de app klikken.
 | AI-verwerking | De wachtrij doorloopt de verwerkingsstappen (layout → GPT) |
 | Valideren | Kopvelden en factuurregels met confidence, valideren en wegschrijven |
 | Bonnetje | Gekreukt bonnetje op foto; twee fouten worden in de tabel verbeterd |
-| Instellen | Automatische validatie, velden, tabellen, AI-model en prompt, team |
-| Dashboard | Tellers, grafiek per dag, mail per mailtype |
+| Nieuw type | Nieuw documenttype; AI-suggesties stellen velden en tabelkolommen voor uit een voorbeeldfactuur |
+| Instellen | Automatische validatie, een validatieregel die handmatige controle afdwingt, team met leden |
+| Dashboard | Tellers, grafiek per dag en de kosten van de AI-verwerking |
 
-Duur: ongeveer 2 minuten 45. Werkt op desktop en mobiel (op kleine schermen zoomt
+Duur: ongeveer 3 minuten 15. Werkt op desktop en mobiel (op kleine schermen zoomt
 de demo in en volgt hij de cursor).
 
 ## Bestanden
@@ -25,7 +26,7 @@ de demo in en volgt hij de cursor).
 - `index.html` – de demopagina (met `?embed=1` alleen de speler, voor een iframe)
 - `demo.js`, `demo.css` – de demo zelf, zonder externe bibliotheken
 - `assets/` – logo en foto van het bonnetje (uit de video gehaald)
-- `document-automation-studio-demo.html` – alles in één bestand (om te mailen of los te openen)
+- `ai-capture-studio-demo.html` – alles in één bestand (om te mailen of los te openen)
 - `build_standalone.py` – maakt dat ene bestand opnieuw na een wijziging
 
 ## Op de website zetten
@@ -39,7 +40,7 @@ In WordPress: voeg een blok **Aangepaste HTML** toe en plak:
 
 ```html
 <iframe id="acs-demo" src="/product-demo/?embed=1&theme=dark&cta=/contact/"
-        title="Demo Document Automation Studio" loading="lazy"
+        title="Demo AI Capture Studio" loading="lazy"
         allow="fullscreen"
         style="width:100%;border:0;aspect-ratio:16/10"></iframe>
 <script>
@@ -66,7 +67,7 @@ Mahadeva AI-thema).
 
 ### Optie 3: één los bestand
 
-`document-automation-studio-demo.html` bevat alles, inclusief de afbeeldingen. Je kunt
+`ai-capture-studio-demo.html` bevat alles, inclusief de afbeeldingen. Je kunt
 het mailen, dubbelklikken om te openen, of als losse pagina uploaden.
 
 ## Instellingen
@@ -76,13 +77,34 @@ Als data-attribuut op `<div data-acs-demo>`, of als URL-parameter op `index.html
 | Data-attribuut | URL-parameter | Standaard | Betekenis |
 |---|---|---|---|
 | `data-cta-url` | `cta` | `/contact/` | Link van de knop op het eindscherm |
-| `data-cta-label` | `ctaLabel` | `Plan een demo` | Tekst van die knop |
+| `data-cta-label` | `ctaLabel` | `Plan jouw demo` | Tekst van die knop |
 | `data-theme` | `theme` | `auto` | `light`, `dark` of `auto` (volgt het systeem) |
 | `data-autoplay` | `autoplay` | `true` | Automatisch starten zodra de demo in beeld komt |
-| `data-chapter` | `chapter` | `0` | Starten bij hoofdstuk (0 = intro, 4 = valideren, …) |
+| `data-chapter` | `chapter` | `0` | Starten bij hoofdstuk (0 = intro, 4 = valideren, 6 = nieuw type, …) |
 | `data-user-name` | – | `Lisa Jansen` | Naam van de ingelogde gebruiker in de app |
 | `data-user-email` | – | `lisa@bedrijf.nl` | E-mailadres onder die naam |
-| `data-product-name` | – | `Document Automation Studio` | Productnaam op intro en eindscherm |
+| `data-product-name` | – | `AI Capture Studio` | Productnaam op intro en eindscherm |
+
+## Zelf proberen
+
+Met **Zelf proberen** bedienen bezoekers de app zelf. Onder de speler verschijnt een lijst
+met opdrachten die afvinken zodra ze gedaan zijn:
+
+1. Upload een document en kijk hoe de AI het uitleest
+2. Controleer een document en valideer het
+3. Maak een nieuw documenttype aan
+4. Laat de AI velden voorstellen met AI-suggesties
+5. Upload een document van je eigen documenttype
+6. Richt een validatieregel in
+7. Geef een collega toegang via een team
+8. Bekijk wat de AI-verwerking kost
+
+Alles werkt echt binnen de demo. Wat de AI uitleest hangt af van de velden die je
+instelt: voeg je bijvoorbeeld het veld "IBAN" toe, dan leest de AI bij het volgende
+document ook het IBAN uit. Validatieregels worden echt gecontroleerd (een factuur boven
+de ingestelde grens gaat naar handmatige controle), filters in de wachtrij werken en
+Exporteren (CSV) downloadt echt een bestand. Er zijn vijf voorbeeldbestanden: twee
+facturen, een rekeningoverzicht, een bonnetje en een contract.
 
 ## Aanpassen
 
@@ -90,6 +112,9 @@ Als data-attribuut op `<div data-acs-demo>`, of als URL-parameter op `index.html
   Elke `P.caption('…')` is een ondertitel; elke `P.click(…)`/`P.type(…)` een actie.
 - **Voorbeelddata** (leveranciers, facturen, mails): `SUPPLIERS`, `seedDocs()` en
   `seedMails()` in `demo.js`.
+- **Voorbeeldbestanden** voor uploaden en AI-suggesties: `SAMPLES` en de functies
+  `srcInvoice`, `srcTechSupply`, `srcStatement`, `srcReceipt` en `srcContract`.
+- **Opdrachten** in "Zelf proberen": `GOALS` in `demo.js`.
 - Draai daarna `python3 build_standalone.py` om het losse bestand bij te werken.
 
 Lokaal bekijken: start in de hoofdmap van de repository `python3 -m http.server` en
