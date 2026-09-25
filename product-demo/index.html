@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Document Automation Studio · Demo</title>
+  <meta name="description" content="Bekijk hoe Document Automation Studio inkomende mail en documenten automatisch verwerkt, of klik zelf door de app.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Questrial&display=swap">
+  <link rel="stylesheet" href="demo.css">
+  <style>
+    :root {
+      --page-bg: #f4f6f9;
+      --page-ink: #16202c;
+      --page-muted: #5b6677;
+      color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) { --page-bg: #0b111a; --page-ink: #e8edf4; --page-muted: #9aa6b8; color-scheme: dark; }
+    }
+    :root[data-theme="dark"] { --page-bg: #0b111a; --page-ink: #e8edf4; --page-muted: #9aa6b8; color-scheme: dark; }
+
+    html, body { margin: 0; }
+    body {
+      background: var(--page-bg);
+      color: var(--page-ink);
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 40px 16px 56px; }
+    .intro { text-align: center; margin: 0 auto 28px; max-width: 720px; }
+    .intro h1 { margin: 0; font-family: "Questrial", "Century Gothic", sans-serif; font-weight: 400; font-size: clamp(28px, 4vw, 44px); letter-spacing: .2px; }
+    .intro p { margin: 10px 0 0; color: var(--page-muted); font-size: clamp(15px, 1.6vw, 18px); line-height: 1.5; }
+
+    /* ingesloten in een iframe: alleen de speler, transparante achtergrond */
+    html.is-embed, html.is-embed[data-theme] { color-scheme: normal; }
+    html.is-embed body { background: transparent; }
+    html.is-embed .wrap { max-width: none; padding: 0 0 4px; }
+    html.is-embed .intro { display: none; }
+  </style>
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search);
+      if (q.get('embed') === '1') document.documentElement.classList.add('is-embed');
+      if (q.get('theme') === 'dark' || q.get('theme') === 'light') document.documentElement.setAttribute('data-theme', q.get('theme'));
+    })();
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="intro">
+      <h1>Zie Document Automation Studio in actie</h1>
+      <p>Een rondleiding van nog geen drie minuten door de app: van inkomende mail tot gevalideerde data. Klik op <strong>Zelf proberen</strong> om zelf rond te klikken.</p>
+    </header>
+
+    <div data-acs-demo data-url-params></div>
+  </div>
+
+  <script src="demo.js"></script>
+</body>
+</html>
