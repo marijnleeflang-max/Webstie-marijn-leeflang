@@ -135,6 +135,21 @@ bureau en toetsenbord zijn in 3D gerenderd, met de app als haarscherp schermbeel
 </picture>
 ```
 
+### Afbeelding bij de tekst over veiligheid
+
+`assets/ai-capture-studio-veiligheid.jpg` (4:3, 1440×1080, voor naast een tekstblok) en
+`ai-capture-studio-veiligheid-breed.jpg` (16:9, 1920×1080), ook als `.webp`. Een bureau met
+monitor uit de promovideo; op het scherm houdt een ingestelde validatieregel een factuur
+boven € 5.000 automatisch tegen: "Handmatige controle vereist".
+
+```html
+<picture>
+  <source srcset="/product-demo/assets/ai-capture-studio-veiligheid.webp" type="image/webp">
+  <img src="/product-demo/assets/ai-capture-studio-veiligheid.jpg" width="1440" height="1080"
+       alt="AI Capture Studio houdt een factuur boven de ingestelde grens automatisch tegen voor handmatige controle" loading="lazy">
+</picture>
+```
+
 ## Goed om te weten
 
 - Het is een simulatie met fictieve voorbeelddata. In "Zelf proberen" kiezen
