@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voorbeeld: webinar-landingspagina</title>
+<style>
+@import url('https://fonts.cdnfonts.com/css/tex-gyre-adventor');
+html,body{margin:0;padding:0}
+body{background:#e4f0f5;font-family:'TeX Gyre Adventor','Century Gothic','Questrial','Futura',Arial,sans-serif;color:#0c3f6c}
+.demo-note{background:#a71e5e;color:#fff;text-align:center;font:600 13px/1.4 Arial,sans-serif;padding:8px 16px}
+.demo-top{background:#e4f0f5;padding:10px 0 0}
+.demo-top__in{max-width:1800px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;font-size:16px;color:#0c3f6c;flex-wrap:wrap}
+.demo-top__in span{margin-right:22px}
+.demo-top__in b{color:#0c3f6c}
+.demo-head{position:sticky;top:0;z-index:50;padding:12px 24px;background:#e4f0f5}
+.demo-head__card{max-width:1800px;margin:0 auto;display:flex;align-items:center;gap:32px;padding:14px 36px;background:#fff;border-radius:24px;box-shadow:0 10px 30px -20px rgba(12,63,108,.5)}
+.demo-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.demo-logo img{height:62px;width:auto}
+.demo-logo b{display:block;font-size:36px;line-height:1;color:#0c3f6c;letter-spacing:.02em}
+.demo-logo small{display:block;font-size:13px;letter-spacing:.12em;color:#009fe3}
+.demo-nav{margin-left:auto;display:flex;align-items:center;gap:36px;font-size:20px}
+.demo-nav a{color:#0c3f6c;text-decoration:none}
+.demo-nav .demo-btn{background:#95c11f;color:#fff;font-weight:700;padding:14px 24px;border-radius:6px;font-size:18px}
+.demo-main{background:#fff}
+.demo-foot{background:#0c3f6c;color:#fff;padding:48px 24px;text-align:center;font-size:15px}
+@media (max-width:1100px){.demo-nav a:not(.demo-btn){display:none}}
+@media (max-width:640px){.demo-top{display:none}.demo-head{padding:8px}.demo-head__card{padding:10px 16px;gap:12px}.demo-logo img{height:44px}.demo-logo b{font-size:24px}.demo-logo small{font-size:9px}.demo-nav .demo-btn{padding:10px 14px;font-size:14px}}
+.entry-content{max-width:1140px;margin:0 auto;padding:0 24px}</style></head>
+<body>
+<div class="demo-note">Voorbeeldweergave: header en footer zijn nagebootst. Alleen het deel tussen header en footer is de code voor WordPress.</div>
+<div class="demo-top"><div class="demo-top__in"><div><span>&#10004; Transparante werkwijze</span><span>&#10004; Werken met Fixed Fees</span></div><div>RFI/RFP insturen &nbsp;|&nbsp; Werken Bij &nbsp;|&nbsp; +31 (0)318-250 220</div></div></div>
+<header class="demo-head"><div class="demo-head__card"><a class="demo-logo" href="#"><img alt="" src="data:image/png;base64,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"><span><b>PEACOCK</b><small>INTELLIGENT AUTOMATION</small></span></a>
+<nav class="demo-nav"><a href="#">Diensten</a><a href="#">Oplossingen</a><a href="#">Resources</a><a href="#">Training</a><a href="#">Over ons</a><a class="demo-btn" href="#">Inspiratiegesprek</a></nav></div></header>
+<main class="demo-main"><article><header class="entry-header"><h1 class="entry-title">Webinar logistiek</h1></header><div class="entry-content">
+<style>
+/* ============================================================================
+  PEACOCK | Landingspagina webinar AI Capture Studio, Logistiek & Transport
+  Plak dit HELE bestand in één blok "Aangepaste HTML" (Custom HTML) in WordPress.
+  Vervang eerst de plaatshouders DATUM en TIJD (tussen blokhaken) via zoeken en vervangen. Zie LEESMIJ.md.
+============================================================================ */
+/* ---------- Basis & huisstijlkleuren (Corporate Identity 2024) ---------- */
+#pck-webinar{
+  --pck-navy:#0c3f6c; --pck-navy-2:#103f6b; --pck-ink:#050408; --pck-blue:#009fe3; --pck-ice:#e4f0f5;
+  --pck-green:#95c11f; --pck-green-dark:#7fa618; --pck-magenta:#a71e5e; --pck-purple:#a84d97; --pck-teal:#00a091;
+  --pck-muted:#3f6285; --pck-line:#cfdde8;
+  --pck-grad:linear-gradient(105deg,#050408 0%,#071427 20%,#103f6b 55%,#a71e5e 100%);
+  --pck-grad-card:linear-gradient(135deg,#050408 0%,#0c2c4f 45%,#103f6b 65%,#a71e5e 130%);
+  --pck-radius:24px; --pck-shadow:0 24px 60px -24px rgba(5,4,8,.35);
+  position:relative; box-sizing:border-box;
+  width:100vw !important; max-width:100vw !important; margin-left:calc(50% - 50vw) !important; margin-right:calc(50% - 50vw) !important;
+  margin-top:0; margin-bottom:0; padding:0; overflow:hidden;
+  background:#fff; color:var(--pck-navy); font-size:17px; line-height:1.65; text-align:left;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+/* Alternatief als je thema geen volle breedte toestaat: geef de wrapper de class "pck-boxed" */
+#pck-webinar.pck-boxed{width:auto !important; max-width:100% !important; margin-left:0 !important; margin-right:0 !important; border-radius:32px}
+html:has(#pck-webinar), body:has(#pck-webinar){overflow-x:clip}
+@media (prefers-reduced-motion:no-preference){html:has(#pck-webinar){scroll-behavior:smooth}}
+/* Paginatitel van het thema verbergen: de hero heeft al een H1 */
+body:has(#pck-webinar) .entry-title, body:has(#pck-webinar) .wp-block-post-title, body:has(#pck-webinar) h1.page-title{display:none}
+/* ---------- Reset binnen de pagina (voorkomt botsingen met het thema) ---------- */
+#pck-webinar *, #pck-webinar *::before, #pck-webinar *::after{box-sizing:border-box}
+#pck-webinar h1, #pck-webinar h2, #pck-webinar h3, #pck-webinar h4, #pck-webinar p, #pck-webinar ul, #pck-webinar ol, #pck-webinar li, #pck-webinar figure, #pck-webinar fieldset, #pck-webinar legend, #pck-webinar details, #pck-webinar summary{margin:0; padding:0; border:0; background:none}
+#pck-webinar h1, #pck-webinar h2, #pck-webinar h3, #pck-webinar h4{color:inherit; font-weight:700; text-transform:none; letter-spacing:-.01em; font-style:normal}
+#pck-webinar h1::before, #pck-webinar h1::after, #pck-webinar h2::before, #pck-webinar h2::after, #pck-webinar h3::before, #pck-webinar h3::after, #pck-webinar li::before, #pck-webinar li::after{content:none}
+#pck-webinar ul, #pck-webinar ol{list-style:none}
+#pck-webinar li{margin:0; line-height:inherit}
+#pck-webinar p{font-size:inherit; line-height:inherit; color:inherit}
+#pck-webinar a{color:inherit; text-decoration:none; box-shadow:none; border:0; background-image:none}
+#pck-webinar strong{font-weight:700; color:inherit}
+#pck-webinar em{font-style:normal}
+#pck-webinar svg{display:block; flex-shrink:0; width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+#pck-webinar .pck-sr{position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+/* ---------- Layout ---------- */
+#pck-webinar .pck-wrap{position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:0 32px}
+#pck-webinar .pck-sec{position:relative; overflow:hidden; margin:0; padding:104px 0}
+#pck-webinar .pck-sec--ice{background:var(--pck-ice)}
+#pck-webinar .pck-sec--white{background:#fff}
+#pck-webinar .pck-sec--dark{background:var(--pck-grad); color:#fff}
+#pck-webinar .pck-split{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:64px; align-items:center}
+#pck-webinar .pck-head{max-width:760px; margin-bottom:56px}
+#pck-webinar .pck-head--center{margin-left:auto; margin-right:auto; text-align:center}
+#pck-webinar .pck-sec{scroll-margin-top:120px}
+/* ---------- Typografie ---------- */
+#pck-webinar .pck-eyebrow{display:block; margin-bottom:14px; color:var(--pck-blue); font-size:22px; line-height:1.3; font-weight:400}
+#pck-webinar .pck-h1{margin-bottom:24px; color:#fff; font-size:clamp(40px,5.2vw,72px); line-height:1.04; letter-spacing:-.02em}
+#pck-webinar .pck-h2{margin-bottom:20px; font-size:clamp(30px,3.3vw,44px); line-height:1.12}
+#pck-webinar .pck-h3{margin-bottom:10px; font-size:21px; line-height:1.3}
+#pck-webinar .pck-lead{font-size:19px; line-height:1.7; color:var(--pck-muted)}
+#pck-webinar .pck-sec--dark .pck-lead, #pck-webinar .pck-hero .pck-lead{color:rgba(255,255,255,.86)}
+#pck-webinar .pck-code{display:block; margin-bottom:10px; color:var(--pck-blue); font-size:14px; font-weight:700; letter-spacing:.04em}
+/* ---------- Knoppen (zoals op peacock-ia.nl) ---------- */
+#pck-webinar .pck-btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:0; margin:0; padding:16px 28px; border:2px solid transparent; border-radius:6px; background:var(--pck-green); color:#fff; font:inherit; font-size:17px; font-weight:700; line-height:1.2; text-align:center; text-decoration:none; text-transform:none; letter-spacing:0; box-shadow:none; cursor:pointer; transition:background-color .2s ease, border-color .2s ease, color .2s ease, transform .2s ease}
+#pck-webinar .pck-btn svg{width:20px; height:20px; stroke-width:2.2}
+#pck-webinar .pck-btn:hover, #pck-webinar .pck-btn:focus-visible{background:var(--pck-green-dark); color:#fff; transform:translateY(-1px)}
+#pck-webinar .pck-btn--ghost{background:transparent; border-color:#fff; color:#fff}
+#pck-webinar .pck-btn--ghost:hover, #pck-webinar .pck-btn--ghost:focus-visible{background:#fff; color:var(--pck-navy)}
+#pck-webinar .pck-btn--block{display:flex; width:100%}
+#pck-webinar .pck-btn:focus-visible, #pck-webinar a:focus-visible, #pck-webinar summary:focus-visible{outline:3px solid var(--pck-blue); outline-offset:3px}
+#pck-webinar .pck-btns{display:flex; flex-wrap:wrap; gap:14px}
+/* ---------- Huisstijlelement: cirkel met het hart in de hoek ---------- */
+#pck-webinar .pck-circle{position:absolute; z-index:0; width:760px; height:760px; border-radius:50%; pointer-events:none}
+#pck-webinar .pck-circle--white{border:1.5px solid rgba(255,255,255,.55)}
+#pck-webinar .pck-circle--grad{border:2px solid transparent; background:linear-gradient(135deg,var(--pck-blue),var(--pck-purple),var(--pck-magenta)) border-box; -webkit-mask:linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask:linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0); mask-composite:exclude; opacity:.45}
+#pck-webinar .pck-circle--br{right:-380px; bottom:-380px}
+#pck-webinar .pck-circle--tr{right:-380px; top:-380px}
+#pck-webinar .pck-circle--bl{left:-380px; bottom:-380px}
+#pck-webinar .pck-circle--tl{left:-380px; top:-380px}
+/* ---------- Hero ---------- */
+#pck-webinar .pck-hero{position:relative; overflow:hidden; margin:0; padding:88px 0 176px; background:radial-gradient(circle at 82% 70%,rgba(167,30,94,.45),rgba(167,30,94,0) 45%), var(--pck-grad); color:#fff; border-bottom-right-radius:120px}
+#pck-webinar .pck-hero .pck-split{grid-template-columns:minmax(0,1fr) minmax(0,1.08fr); gap:56px}
+#pck-webinar .pck-hero .pck-lead{max-width:560px; margin-bottom:28px}
+#pck-webinar .pck-meta{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:34px}
+#pck-webinar .pck-meta li{display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border:1px solid rgba(255,255,255,.28); border-radius:999px; background:rgba(255,255,255,.08); font-size:15px; line-height:1.2; color:#fff}
+#pck-webinar .pck-meta svg{width:18px; height:18px; color:var(--pck-blue)}
+/* Hero-visual: uitgelezen transportopdracht */
+#pck-webinar .pck-mock{position:relative; padding-right:168px}
+#pck-webinar .pck-mock__card{position:relative; z-index:1; padding:22px; border-radius:20px; background:#fff; color:var(--pck-navy); box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+#pck-webinar .pck-mock__bar{display:flex; align-items:center; gap:6px; margin-bottom:16px}
+#pck-webinar .pck-mock__dot{width:9px; height:9px; border-radius:50%; background:var(--pck-line)}
+#pck-webinar .pck-mock__app{margin-left:auto; font-size:12px; font-weight:700; color:var(--pck-muted); letter-spacing:.04em}
+#pck-webinar .pck-mock__mail{display:flex; align-items:center; gap:12px; padding:12px; border:1px solid var(--pck-line); border-radius:14px; background:#f6fafc}
+#pck-webinar .pck-mock__ico{display:grid; place-items:center; width:40px; height:40px; border-radius:10px; background:var(--pck-navy); color:#fff}
+#pck-webinar .pck-mock__ico svg{width:20px; height:20px}
+#pck-webinar .pck-mock__meta{display:flex; flex-direction:column; min-width:0; line-height:1.3}
+#pck-webinar .pck-mock__meta strong{font-size:15px}
+#pck-webinar .pck-mock__meta small{font-size:12px; color:var(--pck-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+#pck-webinar .pck-pill{display:inline-block; margin-left:auto; padding:5px 10px; border-radius:999px; font-size:12px; font-weight:700; line-height:1.2; white-space:nowrap}
+#pck-webinar .pck-pill--ok{background:#eef6d9; color:#4f6d06}
+#pck-webinar .pck-pill--wait{background:#f7e3ec; color:var(--pck-magenta)}
+#pck-webinar .pck-pill--check{background:#e0f1fb; color:#006e9e}
+#pck-webinar .pck-mock__label{display:flex; align-items:center; justify-content:space-between; gap:10px; margin:18px 0 8px; font-size:12px; font-weight:700; line-height:1.3; letter-spacing:.06em; text-transform:uppercase; color:var(--pck-muted)}
+#pck-webinar .pck-mock__label .pck-pill{letter-spacing:0; text-transform:none}
+#pck-webinar .pck-mock__fields li{display:grid; grid-template-columns:minmax(0,1fr) auto 52px; align-items:center; gap:12px; padding:9px 0; border-bottom:1px dashed var(--pck-line); font-size:14px; line-height:1.3}
+#pck-webinar .pck-mock__fields li:last-child{border-bottom:0}
+#pck-webinar .pck-mock__fields span{color:var(--pck-muted)}
+#pck-webinar .pck-mock__fields em{padding:3px 0; border-radius:6px; background:#e3f5f3; color:#00766b; font-size:12px; font-weight:700; text-align:center}
+#pck-webinar .pck-mock__done{display:flex; align-items:center; gap:8px; margin-top:14px; padding:12px 14px; border-radius:12px; background:var(--pck-green); color:#fff; font-size:15px; font-weight:700; line-height:1.2}
+#pck-webinar .pck-mock__done svg{width:18px; height:18px; stroke-width:2.6}
+#pck-webinar .pck-mock__steps{position:absolute; z-index:2; top:50%; right:0; display:flex; flex-direction:column; gap:10px; width:184px; transform:translateY(-50%)}
+#pck-webinar .pck-mock__steps li{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:11px 14px; border:1px solid rgba(255,255,255,.45); border-radius:12px; background:var(--pck-navy); color:#fff; font-size:14px; line-height:1.25; box-shadow:0 12px 30px -12px rgba(0,0,0,.6)}
+#pck-webinar .pck-mock__steps li svg{width:16px; height:16px; color:var(--pck-green); stroke-width:2.6}
+#pck-webinar .pck-mock__steps li.is-final{background:#fff; color:var(--pck-navy); font-weight:700}
+/* ---------- Infokaart onder de hero ---------- */
+#pck-webinar .pck-facts-wrap{position:relative; z-index:3; background:var(--pck-ice); padding:0 0 8px}
+#pck-webinar .pck-facts{display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,.8fr) auto; align-items:center; gap:28px; margin-top:-104px; padding:32px 36px; border-radius:var(--pck-radius); background:#fff; box-shadow:var(--pck-shadow)}
+#pck-webinar .pck-facts__title{grid-column:1 / -1; margin-bottom:-6px; color:var(--pck-blue); font-size:24px; line-height:1.2}
+#pck-webinar .pck-fact{display:flex; align-items:center; gap:14px; min-width:0}
+#pck-webinar .pck-fact__ico{display:grid; place-items:center; width:48px; height:48px; flex:0 0 48px; border-radius:14px; background:var(--pck-ice); color:var(--pck-navy)}
+#pck-webinar .pck-fact small{display:block; font-size:13px; line-height:1.2; color:var(--pck-muted)}
+#pck-webinar .pck-fact strong{display:block; font-size:17px; line-height:1.3}
+/* ---------- Probleem ---------- */
+#pck-webinar .pck-note{margin-top:28px; padding:6px 0 6px 18px; border-left:4px solid var(--pck-magenta); color:var(--pck-navy); font-size:19px; font-weight:700; line-height:1.45}
+#pck-webinar .pck-inbox{padding:20px; border-radius:var(--pck-radius); background:#fff; box-shadow:var(--pck-shadow)}
+#pck-webinar .pck-inbox__head{display:flex; align-items:center; gap:10px; padding:4px 4px 14px; border-bottom:1px solid var(--pck-line); font-size:14px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-inbox__head svg{width:20px; height:20px; color:var(--pck-blue)}
+#pck-webinar .pck-inbox__head .pck-pill{background:var(--pck-magenta); color:#fff}
+#pck-webinar .pck-inbox li{display:flex; align-items:center; gap:12px; padding:13px 4px; border-bottom:1px solid #edf2f6; font-size:14px; line-height:1.35}
+#pck-webinar .pck-inbox li:last-child{border-bottom:0; padding-bottom:4px}
+#pck-webinar .pck-inbox li > svg{width:20px; height:20px; color:var(--pck-muted)}
+#pck-webinar .pck-inbox li span:not(.pck-pill){display:flex; flex-direction:column; min-width:0}
+#pck-webinar .pck-inbox li small{color:var(--pck-muted); font-size:12px}
+#pck-webinar .pck-cards3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; margin-top:64px}
+#pck-webinar .pck-card{padding:32px; border-radius:var(--pck-radius); background:#fff}
+#pck-webinar .pck-card p:not(.pck-code){color:var(--pck-muted)}
+#pck-webinar .pck-sec--white .pck-card{background:var(--pck-ice)}
+/* ---------- Documenten ---------- */
+#pck-webinar .pck-chips{display:flex; flex-wrap:wrap; gap:12px}
+#pck-webinar .pck-chips li{display:inline-flex; align-items:center; gap:10px; padding:12px 18px 12px 14px; border:1px solid var(--pck-line); border-radius:999px; background:#fff; font-size:16px; font-weight:700; line-height:1.2; box-shadow:0 8px 20px -14px rgba(12,63,108,.45)}
+#pck-webinar .pck-chips li svg{width:20px; height:20px; color:var(--pck-blue)}
+#pck-webinar .pck-chips li.is-more{border-style:dashed; background:transparent; box-shadow:none; color:var(--pck-muted)}
+#pck-webinar .pck-sub{margin-top:18px; color:var(--pck-navy); font-weight:700}
+/* ---------- Zo werkt het ---------- */
+#pck-webinar .pck-steps4{position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:24px; counter-reset:none}
+#pck-webinar .pck-steps4::before{content:""; position:absolute; top:28px; left:12%; right:12%; height:2px; background:linear-gradient(90deg,var(--pck-blue),var(--pck-magenta)); opacity:.5}
+#pck-webinar .pck-step{position:relative; padding:0 8px; text-align:center}
+#pck-webinar .pck-step__num{display:grid; place-items:center; width:56px; height:56px; margin:0 auto 20px; border:4px solid var(--pck-ice); border-radius:50%; background:var(--pck-navy); color:#fff; font-size:20px; font-weight:700; line-height:1}
+#pck-webinar .pck-step p:not(.pck-code){color:var(--pck-muted); font-size:16px}
+#pck-webinar .pck-compare-head{margin:88px auto 32px; text-align:center}
+#pck-webinar .pck-compare-head .pck-h3{font-size:clamp(24px,2.4vw,32px)}
+#pck-webinar .pck-compare-head p{color:var(--pck-muted)}
+#pck-webinar .pck-compare{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px}
+#pck-webinar .pck-compare__col{padding:32px; border-radius:var(--pck-radius); background:#fff}
+#pck-webinar .pck-compare__col--new{background:var(--pck-grad-card); color:#fff}
+#pck-webinar .pck-compare__title{display:flex; align-items:center; gap:10px; margin-bottom:18px; font-size:18px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-compare__title small{font-size:14px; font-weight:400; opacity:.8}
+#pck-webinar .pck-timeline li{position:relative; display:flex; justify-content:space-between; gap:16px; padding:14px 0 14px 30px; border-bottom:1px solid var(--pck-line); line-height:1.35}
+#pck-webinar .pck-compare__col--new .pck-timeline li{border-bottom-color:rgba(255,255,255,.18)}
+#pck-webinar .pck-timeline li:last-child{border-bottom:0}
+#pck-webinar .pck-timeline li::before{content:""; position:absolute; left:4px; top:50%; width:12px; height:12px; margin-top:-6px; border-radius:50%; background:var(--pck-magenta)}
+#pck-webinar .pck-compare__col--new .pck-timeline li::before{background:var(--pck-green)}
+#pck-webinar .pck-timeline em{font-weight:700; white-space:nowrap}
+#pck-webinar .pck-timeline li.is-last{font-weight:700}
+#pck-webinar .pck-compare__col--old .pck-timeline li.is-last em{color:var(--pck-magenta)}
+#pck-webinar .pck-compare__col--new .pck-timeline li.is-last em{color:var(--pck-green)}
+#pck-webinar .pck-kpis{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; margin-top:24px}
+#pck-webinar .pck-kpis li{display:flex; align-items:flex-start; gap:12px; padding:20px 22px; border-radius:18px; background:#fff; line-height:1.4}
+#pck-webinar .pck-kpis li svg{margin-top:1px; color:var(--pck-green); stroke-width:2.4}
+#pck-webinar .pck-kpis small{display:block; color:var(--pck-muted); font-size:14px}
+#pck-webinar .pck-tagline{margin-top:40px; text-align:center; color:var(--pck-navy); font-size:20px; font-weight:700}
+/* ---------- Resultaat (donker) ---------- */
+#pck-webinar .pck-benefits{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px}
+#pck-webinar .pck-benefit{padding:36px 32px; border:1px solid rgba(255,255,255,.2); border-radius:var(--pck-radius); background:rgba(255,255,255,.07); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px)}
+#pck-webinar .pck-benefit .pck-code{color:#7fd3f7}
+#pck-webinar .pck-big{margin-bottom:12px; font-size:clamp(28px,2.5vw,36px); font-weight:700; line-height:1.1; color:#fff}
+#pck-webinar .pck-benefit p:last-child{color:rgba(255,255,255,.84)}
+#pck-webinar .pck-foot{margin-top:40px; text-align:center; font-size:20px; font-weight:700}
+/* ---------- Veilig binnen Microsoft ---------- */
+#pck-webinar .pck-checks{display:grid; gap:12px; margin-top:28px}
+#pck-webinar .pck-checks li{display:flex; align-items:center; gap:12px; font-weight:700; line-height:1.4}
+#pck-webinar .pck-checks li svg{width:26px; height:26px; padding:5px; border-radius:50%; background:var(--pck-green); color:#fff; stroke-width:3}
+#pck-webinar .pck-tenant{position:relative; padding:28px; border:2px dashed #9dbad3; border-radius:32px; background:var(--pck-ice)}
+#pck-webinar .pck-tenant__label{display:flex; align-items:center; gap:10px; margin-bottom:18px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-tenant__label svg{color:var(--pck-blue)}
+#pck-webinar .pck-tenant__app{padding:24px; border-radius:22px; background:var(--pck-grad-card); color:#fff; box-shadow:var(--pck-shadow)}
+#pck-webinar .pck-tenant__title{display:flex; align-items:center; gap:10px; margin-bottom:16px; font-size:20px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-tenant__title svg{color:#7fd3f7}
+#pck-webinar .pck-tenant__grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+#pck-webinar .pck-tenant__grid div{display:flex; align-items:center; gap:8px; padding:12px; border:1px solid rgba(255,255,255,.22); border-radius:12px; background:rgba(255,255,255,.08); font-size:14px; line-height:1.3}
+#pck-webinar .pck-tenant__grid svg{width:18px; height:18px; color:var(--pck-green)}
+#pck-webinar .pck-tenant__data{display:flex; align-items:center; justify-content:center; gap:10px; margin-top:14px; padding:12px; border-radius:12px; background:#fff; color:var(--pck-navy); font-size:15px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-tenant__data svg{width:20px; height:20px; color:var(--pck-blue)}
+/* ---------- Programma & voor wie ---------- */
+#pck-webinar .pck-split--top{align-items:start}
+#pck-webinar .pck-agenda{display:grid; gap:14px; margin-top:32px}
+#pck-webinar .pck-agenda li{display:flex; gap:18px; padding:20px 22px; border-radius:18px; background:#fff}
+#pck-webinar .pck-agenda__num{display:grid; place-items:center; width:40px; height:40px; flex:0 0 40px; border-radius:12px; background:var(--pck-navy); color:#fff; font-weight:700; line-height:1}
+#pck-webinar .pck-agenda__title{display:block; margin-bottom:2px; font-size:18px; line-height:1.35}
+#pck-webinar .pck-agenda p{color:var(--pck-muted); font-size:16px; line-height:1.55}
+#pck-webinar .pck-who{position:relative; overflow:hidden; padding:40px; border-radius:var(--pck-radius); background:var(--pck-grad-card); color:#fff}
+#pck-webinar .pck-who .pck-h3{font-size:26px; margin-bottom:22px}
+#pck-webinar .pck-who .pck-checks{margin:0 0 32px}
+#pck-webinar .pck-who .pck-checks li{align-items:flex-start; font-weight:400}
+#pck-webinar .pck-who .pck-checks li svg{margin-top:0}
+#pck-webinar .pck-who .pck-circle{width:240px; height:240px; right:-120px; bottom:-120px}
+/* ---------- Aanmelden ---------- */
+#pck-webinar .pck-signup .pck-split{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); align-items:start}
+#pck-webinar .pck-eyebrow--light{color:#7fd3f7}
+#pck-webinar .pck-signup__facts{display:grid; gap:14px; margin-top:32px}
+#pck-webinar .pck-signup__facts li{display:flex; align-items:center; gap:14px; font-size:18px; line-height:1.35}
+#pck-webinar .pck-signup__facts svg{width:44px; height:44px; padding:11px; border-radius:12px; background:rgba(255,255,255,.12); color:#7fd3f7}
+#pck-webinar .pck-formcard{position:relative; z-index:1; scroll-margin-top:140px; padding:40px; border-radius:var(--pck-radius); background:#fff; color:var(--pck-navy); box-shadow:0 40px 80px -30px rgba(0,0,0,.55)}
+#pck-webinar .pck-formcard__title{margin-bottom:6px; font-size:26px; font-weight:700; line-height:1.25}
+#pck-webinar .pck-formcard__intro{margin-bottom:26px; color:var(--pck-muted); font-size:16px}
+#pck-webinar .pck-form{display:grid; gap:18px}
+#pck-webinar .pck-grid2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px}
+#pck-webinar .pck-field{display:flex; flex-direction:column; gap:6px; min-width:0}
+#pck-webinar .pck-field label, #pck-webinar .pck-fieldset legend{display:block; margin:0; padding:0; color:var(--pck-navy); font-size:15px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-req{color:var(--pck-magenta)}
+#pck-webinar .pck-opt{color:var(--pck-muted); font-weight:400}
+#pck-webinar .pck-field input, #pck-webinar .pck-field select, #pck-webinar .pck-field textarea{display:block; width:100%; height:auto; min-height:0; margin:0; padding:14px 16px; border:1.5px solid var(--pck-line); border-radius:10px; background:#f8fbfd; color:var(--pck-navy); font:inherit; font-size:16px; line-height:1.3; box-shadow:none; outline:0; -webkit-appearance:none; appearance:none; transition:border-color .15s ease, box-shadow .15s ease, background-color .15s ease}
+#pck-webinar .pck-field input::placeholder{color:#8aa3ba; opacity:1}
+#pck-webinar .pck-field input:focus{border-color:var(--pck-blue); background:#fff; box-shadow:0 0 0 4px rgba(0,159,227,.15)}
+#pck-webinar .pck-field.is-error input{border-color:var(--pck-magenta); background:#fdf5f8}
+#pck-webinar .pck-errmsg{display:none; color:var(--pck-magenta); font-size:13px; font-weight:700; line-height:1.3}
+#pck-webinar .is-error .pck-errmsg{display:block}
+#pck-webinar .pck-fieldset{min-width:0}
+#pck-webinar .pck-fieldset legend{margin-bottom:10px}
+#pck-webinar .pck-choices{display:flex; flex-wrap:wrap; gap:8px}
+#pck-webinar .pck-choice{position:relative; display:inline-flex; margin:0; cursor:pointer}
+#pck-webinar .pck-choice input{position:absolute; opacity:0; width:1px; height:1px; margin:0}
+#pck-webinar .pck-choice span{display:inline-block; padding:9px 14px; border:1.5px solid var(--pck-line); border-radius:999px; background:#f8fbfd; color:var(--pck-navy); font-size:14px; font-weight:700; line-height:1.2; transition:all .15s ease; user-select:none}
+#pck-webinar .pck-choice:hover span{border-color:var(--pck-blue)}
+#pck-webinar .pck-choice input:checked + span{border-color:var(--pck-navy); background:var(--pck-navy); color:#fff}
+#pck-webinar .pck-choice input:focus-visible + span{outline:3px solid var(--pck-blue); outline-offset:2px}
+#pck-webinar .pck-consent{display:flex; align-items:flex-start; gap:12px; margin:0; color:var(--pck-muted); font-size:14px; font-weight:400; line-height:1.5; cursor:pointer}
+#pck-webinar .pck-consent input{flex:0 0 22px; width:22px; height:22px; margin:0; border:1.5px solid #9fb4c7; border-radius:6px; background:#fff center / 14px no-repeat; -webkit-appearance:none; appearance:none; cursor:pointer}
+#pck-webinar .pck-consent input:checked{border-color:var(--pck-navy); background-color:var(--pck-navy); background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E")}
+#pck-webinar .pck-consent input:focus-visible{outline:3px solid var(--pck-blue); outline-offset:2px}
+#pck-webinar .pck-consent a{color:var(--pck-navy); font-weight:700; text-decoration:underline}
+#pck-webinar .pck-consent.is-error input{border-color:var(--pck-magenta)}
+#pck-webinar .pck-consent-wrap .pck-errmsg{margin:6px 0 0 34px}
+#pck-webinar .pck-hp{position:absolute !important; left:-9999px; width:1px; height:1px; overflow:hidden}
+#pck-webinar .pck-form .pck-btn{padding:18px 28px; font-size:18px}
+#pck-webinar .pck-form .pck-btn.is-busy{opacity:.7; pointer-events:none}
+#pck-webinar .pck-status{display:none; padding:12px 14px; border-radius:10px; background:#fdf1f5; color:var(--pck-magenta); font-size:14px; font-weight:700; line-height:1.45}
+#pck-webinar .pck-status.is-visible{display:block}
+#pck-webinar .pck-micro{color:var(--pck-muted); font-size:14px; text-align:center}
+#pck-webinar .pck-success{display:none; padding:24px 0 8px; text-align:center}
+#pck-webinar .pck-formcard.is-done > .pck-formcard__title, #pck-webinar .pck-formcard.is-done > .pck-formcard__intro, #pck-webinar .pck-formcard.is-done > .pck-form{display:none}
+#pck-webinar .pck-formcard.is-done .pck-success{display:block}
+#pck-webinar .pck-success__ico{display:grid; place-items:center; width:72px; height:72px; margin:0 auto 20px; border-radius:50%; background:var(--pck-green); color:#fff}
+#pck-webinar .pck-success__ico svg{width:34px; height:34px; stroke-width:2.8}
+#pck-webinar .pck-success p{color:var(--pck-muted)}
+#pck-webinar .pck-success .pck-success__title{margin-bottom:8px; color:var(--pck-navy)}
+#pck-webinar .pck-success__title:focus{outline:0}
+/* Optioneel: eigen formulierplugin (Gravity Forms, Contact Form 7, WPForms) in de kaart, zie LEESMIJ.md */
+#pck-webinar .pck-plugin label, #pck-webinar .pck-plugin legend{display:block; margin:0 0 6px; color:var(--pck-navy); font-size:15px; font-weight:700; line-height:1.3}
+#pck-webinar .pck-plugin input[type=text], #pck-webinar .pck-plugin input[type=email], #pck-webinar .pck-plugin input[type=tel], #pck-webinar .pck-plugin select, #pck-webinar .pck-plugin textarea{width:100%; margin:0 0 16px; padding:14px 16px; border:1.5px solid var(--pck-line); border-radius:10px; background:#f8fbfd; color:var(--pck-navy); font:inherit; font-size:16px; line-height:1.3; box-shadow:none}
+#pck-webinar .pck-plugin input:focus, #pck-webinar .pck-plugin select:focus, #pck-webinar .pck-plugin textarea:focus{border-color:var(--pck-blue); background:#fff; outline:0; box-shadow:0 0 0 4px rgba(0,159,227,.15)}
+#pck-webinar .pck-plugin input[type=submit], #pck-webinar .pck-plugin button[type=submit], #pck-webinar .pck-plugin .gform_button{width:100%; margin:8px 0 0; padding:18px 28px; border:0; border-radius:6px; background:var(--pck-green); color:#fff; font:inherit; font-size:18px; font-weight:700; line-height:1.2; text-transform:none; cursor:pointer}
+#pck-webinar .pck-plugin input[type=submit]:hover, #pck-webinar .pck-plugin button[type=submit]:hover, #pck-webinar .pck-plugin .gform_button:hover{background:var(--pck-green-dark)}
+/* ---------- AI Suite ---------- */
+#pck-webinar .pck-suite{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px}
+#pck-webinar .pck-suite .pck-card{position:relative; border:1.5px solid transparent}
+#pck-webinar .pck-suite .pck-card.is-current{border-color:var(--pck-blue); background:#fff; box-shadow:var(--pck-shadow)}
+#pck-webinar .pck-suite__ico{display:grid; place-items:center; width:52px; height:52px; margin-bottom:20px; border-radius:14px; background:var(--pck-navy); color:#fff}
+#pck-webinar .pck-suite .pck-pill{position:absolute; top:24px; right:24px; background:var(--pck-blue); color:#fff}
+/* ---------- FAQ ---------- */
+#pck-webinar .pck-faq{max-width:880px; margin:0 auto; display:grid; gap:12px}
+#pck-webinar .pck-faq details{border-radius:18px; background:#fff; overflow:hidden}
+#pck-webinar .pck-faq summary{position:relative; display:block; padding:22px 64px 22px 26px; font-size:18px; font-weight:700; line-height:1.4; cursor:pointer; list-style:none}
+#pck-webinar .pck-faq summary::-webkit-details-marker{display:none}
+#pck-webinar .pck-faq summary::marker{content:""}
+#pck-webinar .pck-faq summary::after{content:""; position:absolute; right:26px; top:50%; width:12px; height:12px; margin-top:-9px; border-right:2.5px solid var(--pck-blue); border-bottom:2.5px solid var(--pck-blue); transform:rotate(45deg); transition:transform .2s ease}
+#pck-webinar .pck-faq details[open] summary::after{transform:rotate(225deg); margin-top:-3px}
+#pck-webinar .pck-faq details p{padding:0 26px 24px; color:var(--pck-muted)}
+/* ---------- Slot-CTA ---------- */
+#pck-webinar .pck-final{position:relative; overflow:hidden; padding:80px 64px; border-radius:40px 40px 120px 40px; background:var(--pck-grad); color:#fff; text-align:center}
+#pck-webinar .pck-final .pck-h2{max-width:720px; margin-left:auto; margin-right:auto}
+#pck-webinar .pck-final__inner{position:relative; z-index:1}
+#pck-webinar .pck-final .pck-lead{max-width:620px; margin:0 auto 32px; color:rgba(255,255,255,.86)}
+#pck-webinar .pck-final .pck-btns{justify-content:center}
+#pck-webinar .pck-final__contact{margin-top:24px; color:rgba(255,255,255,.84); font-size:16px}
+#pck-webinar .pck-final__contact a{color:#fff; font-weight:700; text-decoration:underline; text-underline-offset:3px}
+#pck-webinar .pck-payoff{margin-top:48px; font-size:15px; font-weight:700; letter-spacing:.28em; color:#7fd3f7}
+#pck-webinar .pck-sign{display:flex; align-items:center; gap:16px; max-width:640px; margin:40px auto 0; color:var(--pck-muted); font-size:14px; white-space:nowrap}
+#pck-webinar .pck-sign::before, #pck-webinar .pck-sign::after{content:""; flex:1; height:1px; background:var(--pck-line)}
+/* ---------- Animatie hero-visual ---------- */
+@media (prefers-reduced-motion:no-preference){
+  #pck-webinar .pck-mock__steps li{animation:pckIn .55s cubic-bezier(.2,.7,.2,1) both}
+  #pck-webinar .pck-mock__steps li:nth-child(2){animation-delay:.35s}
+  #pck-webinar .pck-mock__steps li:nth-child(3){animation-delay:.7s}
+  #pck-webinar .pck-mock__steps li:nth-child(4){animation-delay:1.05s}
+  #pck-webinar .pck-mock__steps li:nth-child(5){animation-delay:1.4s}
+  #pck-webinar .pck-mock__done{animation:pckIn .55s 1.75s cubic-bezier(.2,.7,.2,1) both}
+}
+@keyframes pckIn{from{opacity:0; transform:translateX(16px)}to{opacity:1; transform:none}}
+/* ---------- Responsive ---------- */
+@media (max-width:1080px){
+  #pck-webinar .pck-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #pck-webinar .pck-facts__cta{grid-column:1 / -1}
+  #pck-webinar .pck-facts__cta .pck-btn{width:100%}
+  #pck-webinar .pck-steps4{grid-template-columns:repeat(2,minmax(0,1fr)); row-gap:48px}
+  #pck-webinar .pck-steps4::before{display:none}
+}
+@media (max-width:960px){
+  #pck-webinar .pck-sec{padding:80px 0}
+  #pck-webinar .pck-split, #pck-webinar .pck-hero .pck-split, #pck-webinar .pck-signup .pck-split{grid-template-columns:minmax(0,1fr); gap:48px}
+  #pck-webinar .pck-hero{padding:64px 0 160px; border-bottom-right-radius:64px}
+  #pck-webinar .pck-mock{max-width:560px}
+  #pck-webinar .pck-cards3, #pck-webinar .pck-benefits, #pck-webinar .pck-suite, #pck-webinar .pck-kpis{grid-template-columns:minmax(0,1fr)}
+  #pck-webinar .pck-compare{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  #pck-webinar{font-size:16px}
+  #pck-webinar .pck-wrap{padding:0 20px}
+  #pck-webinar .pck-sec{padding:64px 0}
+  #pck-webinar .pck-eyebrow{font-size:19px}
+  #pck-webinar .pck-lead{font-size:17px}
+  #pck-webinar .pck-hero{padding:48px 0 150px; border-bottom-right-radius:48px}
+  #pck-webinar .pck-btns .pck-btn{width:100%}
+  #pck-webinar .pck-mock{padding-right:0}
+  #pck-webinar .pck-mock__steps{position:static; flex-direction:row; flex-wrap:wrap; width:auto; margin-top:14px; transform:none}
+  #pck-webinar .pck-mock__steps li{flex:1 1 45%; font-size:13px}
+  #pck-webinar .pck-mock__steps li.is-final{flex-basis:100%}
+  #pck-webinar .pck-facts{grid-template-columns:minmax(0,1fr); gap:18px; padding:26px 22px}
+  #pck-webinar .pck-steps4{grid-template-columns:minmax(0,1fr); row-gap:36px}
+  #pck-webinar .pck-card, #pck-webinar .pck-compare__col, #pck-webinar .pck-benefit{padding:26px 22px}
+  #pck-webinar .pck-timeline li{flex-direction:column; gap:2px}
+  #pck-webinar .pck-formcard, #pck-webinar .pck-who{padding:28px 20px}
+  #pck-webinar .pck-grid2, #pck-webinar .pck-tenant__grid{grid-template-columns:minmax(0,1fr)}
+  #pck-webinar .pck-tenant{padding:18px}
+  #pck-webinar .pck-final{padding:56px 22px; border-radius:28px 28px 64px 28px}
+  #pck-webinar .pck-faq summary{padding:18px 52px 18px 20px; font-size:17px}
+  #pck-webinar .pck-faq details p{padding:0 20px 20px}
+  #pck-webinar .pck-circle{width:520px; height:520px}
+  #pck-webinar .pck-circle--br{right:-260px; bottom:-260px}
+  #pck-webinar .pck-circle--tr{right:-260px; top:-260px}
+  #pck-webinar .pck-circle--bl{left:-260px; bottom:-260px}
+  #pck-webinar .pck-circle--tl{left:-260px; top:-260px}
+  #pck-webinar .pck-signup .pck-circle{display:none}
+}
+</style>
+<div id="pck-webinar" data-webinar="Webinar AI Capture Studio voor Logistiek &amp; Transport" data-datum="Donderdag 22 oktober 2026" data-tijd="15:00 – 15:45 uur">
+<section class="pck-hero">
+<div class="pck-circle pck-circle--white pck-circle--br" aria-hidden="true"></div>
+<div class="pck-wrap pck-split">
+<div>
+<p class="pck-eyebrow">Gratis webinar voor logistiek &amp; transport</p>
+<h1 class="pck-h1">Van mailbox naar TMS. Zonder overtypen.</h1>
+<p class="pck-lead">Transportopdrachten, CMR-vrachtbrieven, afleverbewijzen en inkoopfacturen. Ze komen elke dag binnen via de mail, en elke dag typt iemand ze met de hand over. In dit gratis webinar laten we live zien hoe <strong>AI Capture Studio</strong> die documenten automatisch uitleest, controleert en klaarzet in je TMS, WMS of ERP.</p>
+<ul class="pck-meta">
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>Donderdag 22 oktober 2026</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>15:00 – 15:45 uur</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M8.5 21h7M12 17v4"/></svg>Online &amp; live</li>
+</ul>
+<div class="pck-btns"><a class="pck-btn" href="#aanmelden">Meld je gratis aan <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="pck-btn pck-btn--ghost" href="#programma">Bekijk het programma</a></div>
+</div>
+<div class="pck-mock" aria-hidden="true">
+<div class="pck-mock__card">
+<div class="pck-mock__bar"><span class="pck-mock__dot"></span><span class="pck-mock__dot"></span><span class="pck-mock__dot"></span><span class="pck-mock__app">AI CAPTURE STUDIO</span></div>
+<div class="pck-mock__mail"><span class="pck-mock__ico"><svg viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5M8.5 13h7M8.5 17h5"/></svg></span><span class="pck-mock__meta"><strong>Transportopdracht TR-45231</strong><small>planning@jouwbedrijf.nl · PDF-bijlage</small></span></div>
+<div class="pck-mock__label"><span>Velden herkend en gescoord</span><span class="pck-pill pck-pill--ok">Uitgelezen</span></div>
+<ul class="pck-mock__fields">
+<li><span>Ordernummer</span><strong>TR-45231</strong><em>0,98</em></li>
+<li><span>Laadadres</span><strong>Veenendaal</strong><em>0,97</em></li>
+<li><span>Losadres</span><strong>Rotterdam</strong><em>0,96</em></li>
+<li><span>Laaddatum</span><strong>14-10-2026</strong><em>0,96</em></li>
+<li><span>Aantal pallets</span><strong>24</strong><em>0,94</em></li>
+</ul>
+<div class="pck-mock__done"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Doorgezet naar je TMS</div>
+</div>
+<ol class="pck-mock__steps">
+<li>Document komt binnen<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
+<li>Wordt uitgelezen<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
+<li>Gegevens herkend<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
+<li>Gevalideerd<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
+<li class="is-final">Klaar in je TMS<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
+</ol>
+</div>
+</div>
+</section>
+<div class="pck-facts-wrap">
+<div class="pck-wrap">
+<div class="pck-facts">
+<p class="pck-facts__title">Het webinar in het kort</p>
+<div class="pck-fact"><span class="pck-fact__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg></span><span><small>Datum</small><strong>Donderdag 22 oktober 2026</strong></span></div>
+<div class="pck-fact"><span class="pck-fact__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span><span><small>Tijd</small><strong>15:00 – 15:45 uur</strong></span></div>
+<div class="pck-fact"><span class="pck-fact__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M8.5 21h7M12 17v4"/></svg></span><span><small>Waar</small><strong>Online, live</strong></span></div>
+<div class="pck-fact"><span class="pck-fact__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 13.5l-7 7a2 2 0 0 1-2.8 0L3 12.8V3h9.8l7.7 7.7a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></span><span><small>Kosten</small><strong>Gratis</strong></span></div>
+<div class="pck-facts__cta"><a class="pck-btn" href="#aanmelden">Reserveer je plek</a></div>
+</div>
+</div>
+</div>
+<section class="pck-sec pck-sec--ice">
+<div class="pck-wrap">
+<div class="pck-split">
+<div>
+<p class="pck-eyebrow">Herkenbaar?</p>
+<h2 class="pck-h2">Je mailbox loopt sneller vol dan je team kan typen</h2>
+<p class="pck-lead">In logistiek draait alles om snelheid en betrouwbaarheid. Toch gaat er nog verrassend veel tijd zitten in het handmatig verwerken van documenten.</p>
+<p class="pck-note">Elk document dat een mens moet overtypen, kost tijd en brengt risico mee.</p>
+</div>
+<div class="pck-inbox" aria-hidden="true">
+<div class="pck-inbox__head"><svg viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 6.5l9 6.5 9-6.5"/></svg>Postvak · planning@jouwbedrijf.nl<span class="pck-pill">37 nieuw</span></div>
+<ul>
+<li><svg viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg><span><strong>Transportopdracht 45231</strong><small>PDF-bijlage</small></span><span class="pck-pill pck-pill--wait">Onbehandeld</span></li>
+<li><svg viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg><span><strong>CMR-vrachtbrief 88213</strong><small>Scan, PDF</small></span><span class="pck-pill pck-pill--wait">Onbehandeld</span></li>
+<li><svg viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg><span><strong>Factuur charter 2026-0881</strong><small>PDF-bijlage</small></span><span class="pck-pill pck-pill--wait">Onbehandeld</span></li>
+<li><svg viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg><span><strong>Afleverbewijs zending 7712</strong><small>Foto van chauffeur</small></span><span class="pck-pill pck-pill--check">In controle</span></li>
+<li><svg viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg><span><strong>Tariefaanvraag nieuwe klant</strong><small>Excel-bijlage</small></span><span class="pck-pill pck-pill--wait">Onbehandeld</span></li>
+</ul>
+</div>
+</div>
+<div class="pck-cards3">
+<div class="pck-card"><p class="pck-code">//_01</p><h3 class="pck-h3">Overtypen</h3><p>Transportopdrachten en orderbevestigingen komen binnen als PDF of mailtekst. Regel voor regel gaan ze met de hand in je TMS of ERP.</p></div>
+<div class="pck-card"><p class="pck-code">//_02</p><h3 class="pck-h3">Fouten en naslag</h3><p>Een verkeerd losadres, een afwijkend tarief of een gemiste referentie. Het valt pas op als de vracht al onderweg is of de factuur al is betaald.</p></div>
+<div class="pck-card"><p class="pck-code">//_03</p><h3 class="pck-h3">Piekdrukte</h3><p>Seizoenspiek, Q4 of de maandafsluiting: meer zendingen betekent direct meer documenten, en dus meer uren.</p></div>
+</div>
+</div>
+</section>
+<section class="pck-sec pck-sec--white">
+<div class="pck-circle pck-circle--grad pck-circle--tr" aria-hidden="true"></div>
+<div class="pck-wrap pck-split">
+<div>
+<p class="pck-eyebrow">Bijna ieder document</p>
+<h2 class="pck-h2">Gemaakt voor de documentstroom van logistiek en transport</h2>
+<p class="pck-lead">AI Capture Studio leest bijna iedere documentsoort uit en haalt er gestructureerde gegevens uit.</p>
+<p class="pck-sub">Komt er een nieuwe documentsoort bij? Die stel je in, je hoeft niets te laten bouwen.</p>
+</div>
+<ul class="pck-chips">
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Transportopdrachten</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Orderbevestigingen</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>CMR-vrachtbrieven</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Afleverbewijzen (POD)</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Pakbonnen</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Inkoopfacturen van vervoerders</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Douanedocumenten</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Weegbonnen</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></svg>Tariefaanvragen</li>
+<li class="is-more">En meer</li>
+</ul>
+</div>
+</section>
+<section class="pck-sec pck-sec--ice" id="zo-werkt-het">
+<div class="pck-wrap">
+<div class="pck-head pck-head--center">
+<p class="pck-eyebrow">Zo werkt AI Capture Studio</p>
+<h2 class="pck-h2">Van inkomende mail naar verwerkte data in vier stappen</h2>
+<p class="pck-lead">Volledig geautomatiseerd, met een controlemoment waar jij dat wilt.</p>
+</div>
+<ol class="pck-steps4">
+<li class="pck-step"><span class="pck-step__num">1</span><p class="pck-code">//_01</p><h3 class="pck-h3">Mail komt binnen</h3><p>Inkomende mail wordt gelezen, geclassificeerd en naar de juiste map of mailbox gezet.</p></li>
+<li class="pck-step"><span class="pck-step__num">2</span><p class="pck-code">//_02</p><h3 class="pck-h3">Document uitgelezen</h3><p>Transportopdracht, vrachtbrief, factuur of aanvraag: de AI herkent de relevante gegevens.</p></li>
+<li class="pck-step"><span class="pck-step__num">3</span><p class="pck-code">//_03</p><h3 class="pck-h3">Gegevens gevalideerd</h3><p>Herkende velden komen in beeld. Waar nodig controleert een medewerker ze voordat ze definitief zijn.</p></li>
+<li class="pck-step"><span class="pck-step__num">4</span><p class="pck-code">//_04</p><h3 class="pck-h3">Klaar voor je systemen</h3><p>Gevalideerde data landt in Dataverse en stroomt door naar je TMS, WMS, ERP of boekhouding.</p></li>
+</ol>
+<div class="pck-compare-head">
+<h3 class="pck-h3">Van dagen naar minuten</h3>
+<p>Voorbeeld: een transportopdracht die per mail binnenkomt.</p>
+</div>
+<div class="pck-compare">
+<div class="pck-compare__col pck-compare__col--old">
+<p class="pck-compare__title">Vandaag <small>· handmatig</small></p>
+<ul class="pck-timeline">
+<li><span>Mail binnen</span><em>0 min</em></li>
+<li><span>Bijlage openen</span><em>+10 min</em></li>
+<li><span>Regel voor regel vergelijken</span><em>+40 min</em></li>
+<li class="is-last"><span>Overtypen in TMS of ERP</span><em>uren tot dagen</em></li>
+</ul>
+</div>
+<div class="pck-compare__col pck-compare__col--new">
+<p class="pck-compare__title">Met AI Capture Studio <small>· geautomatiseerd</small></p>
+<ul class="pck-timeline">
+<li><span>Mail binnen</span><em>0 min</em></li>
+<li><span>Automatisch uitgelezen</span><em>+1 min</em></li>
+<li><span>Validatie in beeld</span><em>+2 min</em></li>
+<li class="is-last"><span>Klaar in TMS of ERP</span><em>klaar</em></li>
+</ul>
+</div>
+</div>
+<ul class="pck-kpis">
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><strong>Doorlooptijd</strong><small>Van dagen naar minuten</small></span></li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><strong>Kwaliteit</strong><small>Afwijkingen direct in beeld</small></span></li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><strong>Capaciteit</strong><small>Geen extra uren bij piek</small></span></li>
+</ul>
+<p class="pck-tagline">Werkt dag en nacht, nooit ziek, altijd vrolijk.</p>
+</div>
+</section>
+<section class="pck-sec pck-sec--dark">
+<div class="pck-circle pck-circle--white pck-circle--bl" aria-hidden="true"></div>
+<div class="pck-wrap">
+<div class="pck-head pck-head--center">
+<p class="pck-eyebrow pck-eyebrow--light">Wat het oplevert</p>
+<h2 class="pck-h2">Sneller, consistenter, schaalbaar</h2>
+</div>
+<div class="pck-benefits">
+<div class="pck-benefit"><p class="pck-code">//_01 · SNELLER</p><p class="pck-big">Minuten</p><p>Documenten worden automatisch uitgelezen, zonder handwerk. Je planners houden tijd over voor waar ze goed in zijn: plannen.</p></div>
+<div class="pck-benefit"><p class="pck-code">//_02 · CONSISTENTER</p><p class="pck-big">Eén set regels</p><p>Elk document wordt volgens dezelfde regels afgehandeld, ongeacht wie er dienst heeft.</p></div>
+<div class="pck-benefit"><p class="pck-code">//_03 · SCHAALBAAR</p><p class="pck-big">Geen extra fte</p><p>Piekdrukte kost geen extra capaciteit. Groeien zonder extra personeel, juist nu goede mensen in de logistiek schaars zijn.</p></div>
+</div>
+<p class="pck-foot">Dezelfde kwaliteit bij 10 of 1.000 documenten per week.</p>
+</div>
+</section>
+<section class="pck-sec pck-sec--white">
+<div class="pck-wrap pck-split">
+<div>
+<p class="pck-eyebrow">Veilig en beheersbaar</p>
+<h2 class="pck-h2">AI, veilig uitgerold binnen je eigen Microsoft-omgeving</h2>
+<p class="pck-lead">AI Capture Studio draait binnen de Microsoft-omgeving. Eén omgeving met rollen, rechten en vangrails. Schaalbaar van één afdeling tot de hele organisatie.</p>
+<ul class="pck-checks">
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Rollen en rechten per gebruiker</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Vangrails per documentsoort</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Validatie door de mens waar nodig</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Audittrail per document</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Je data blijft in je eigen tenant</li>
+</ul>
+</div>
+<div class="pck-tenant" aria-hidden="true">
+<p class="pck-tenant__label"><svg viewBox="0 0 24 24"><rect x="4" y="10.5" width="16" height="11" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>Jouw Microsoft-omgeving</p>
+<div class="pck-tenant__app">
+<p class="pck-tenant__title"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>AI Capture Studio</p>
+<div class="pck-tenant__grid">
+<div><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M21.5 20c0-2.9-1.8-5-4.5-5.7"/></svg>Rollen &amp; rechten</div>
+<div><svg viewBox="0 0 24 24"><path d="M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6z"/></svg>Vangrails</div>
+<div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Menselijke validatie</div>
+<div><svg viewBox="0 0 24 24"><path d="M9 5h11M9 12h11M9 19h11M4 5h.01M4 12h.01M4 19h.01"/></svg>Audittrail</div>
+</div>
+<div class="pck-tenant__data"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>Dataverse: je data blijft in je eigen tenant</div>
+</div>
+</div>
+</div>
+</section>
+<section class="pck-sec pck-sec--ice" id="programma">
+<div class="pck-wrap pck-split pck-split--top">
+<div>
+<p class="pck-eyebrow">Het webinar</p>
+<h2 class="pck-h2">Wat je leert in dit webinar</h2>
+<ol class="pck-agenda">
+<li><div class="pck-agenda__num">1</div><div><h3 class="pck-agenda__title">Waar de uren zitten</h3><p>De documentstroom in logistiek en transport, van transportopdracht tot factuur.</p></div></li>
+<li><div class="pck-agenda__num">2</div><div><h3 class="pck-agenda__title">Live demo</h3><p>We volgen een transportopdracht van mailbox tot TMS, inclusief validatie.</p></div></li>
+<li><div class="pck-agenda__num">3</div><div><h3 class="pck-agenda__title">Veilig en beheersbaar</h3><p>Rollen, rechten, audittrail en je data in je eigen Microsoft-tenant.</p></div></li>
+<li><div class="pck-agenda__num">4</div><div><h3 class="pck-agenda__title">Zo start je</h3><p>De eerste documentstroom als pilot, en hoe je daarna uitbreidt naar volgende processen.</p></div></li>
+<li><div class="pck-agenda__num">5</div><div><h3 class="pck-agenda__title">Stel je vragen</h3><p>Live aan onze specialisten.</p></div></li>
+</ol>
+</div>
+<div class="pck-who">
+<div class="pck-circle pck-circle--white" aria-hidden="true"></div>
+<h3 class="pck-h3">Voor wie?</h3>
+<ul class="pck-checks">
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Directie en operationeel managers van transport- en logistieke bedrijven</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Teamleiders planning, order-entry en customer service</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Finance en crediteurenadministratie</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>IT- en digitaliseringsverantwoordelijken</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Verladers en warehouses met een eigen logistieke afdeling</li>
+</ul>
+<div class="pck-btns"><a class="pck-btn" href="#aanmelden">Meld je gratis aan <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</div>
+</div>
+</section>
+<section class="pck-sec pck-sec--dark pck-signup" id="aanmelden">
+<div class="pck-circle pck-circle--white pck-circle--tr" aria-hidden="true"></div>
+<div class="pck-wrap pck-split">
+<div>
+<p class="pck-eyebrow pck-eyebrow--light">Gratis aanmelden</p>
+<h2 class="pck-h2">Reserveer je plek</h2>
+<p class="pck-lead">Meld je aan en ontvang de deelnamelink per e-mail. Kun je er niet live bij zijn? Meld je dan toch aan. Je ontvangt na afloop de opname.</p>
+<ul class="pck-signup__facts">
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>Donderdag 22 oktober 2026</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>15:00 – 15:45 uur</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M8.5 21h7M12 17v4"/></svg>Online en live</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 13.5l-7 7a2 2 0 0 1-2.8 0L3 12.8V3h9.8l7.7 7.7a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>Gratis</li>
+</ul>
+</div>
+<div class="pck-formcard" id="pck-formcard">
+<p class="pck-formcard__title">Ja, ik ben erbij</p>
+<p class="pck-formcard__intro">Vul je gegevens in. Velden met een <span class="pck-req">*</span> zijn verplicht.</p>
+<form class="pck-form" id="pck-form" method="post" action="#aanmelden">
+<div class="pck-grid2">
+<div class="pck-field"><label for="pck-voornaam">Voornaam <span class="pck-req">*</span></label><input id="pck-voornaam" name="voornaam" type="text" autocomplete="given-name" required><span class="pck-errmsg">Vul je voornaam in.</span></div>
+<div class="pck-field"><label for="pck-achternaam">Achternaam <span class="pck-req">*</span></label><input id="pck-achternaam" name="achternaam" type="text" autocomplete="family-name" required><span class="pck-errmsg">Vul je achternaam in.</span></div>
+</div>
+<div class="pck-field"><label for="pck-email">Zakelijk e-mailadres <span class="pck-req">*</span></label><input id="pck-email" name="email" type="email" autocomplete="email" placeholder="naam@bedrijf.nl" required><span class="pck-errmsg">Vul een geldig e-mailadres in.</span></div>
+<div class="pck-grid2">
+<div class="pck-field"><label for="pck-bedrijf">Bedrijfsnaam <span class="pck-req">*</span></label><input id="pck-bedrijf" name="bedrijf" type="text" autocomplete="organization" required><span class="pck-errmsg">Vul je bedrijfsnaam in.</span></div>
+<div class="pck-field"><label for="pck-functie">Functie</label><input id="pck-functie" name="functie" type="text" autocomplete="organization-title"></div>
+</div>
+<div class="pck-field"><label for="pck-telefoon">Telefoonnummer <span class="pck-opt">(optioneel)</span></label><input id="pck-telefoon" name="telefoon" type="tel" autocomplete="tel"></div>
+<fieldset class="pck-fieldset">
+<legend>Welke documenten kosten jullie nu de meeste tijd? <span class="pck-opt">(optioneel)</span></legend>
+<div class="pck-choices"><label class="pck-choice"><input class="pck-doc" type="checkbox" value="Transportopdrachten"><span>Transportopdrachten</span></label><label class="pck-choice"><input class="pck-doc" type="checkbox" value="CMR's en afleverbewijzen"><span>CMR's en afleverbewijzen</span></label><label class="pck-choice"><input class="pck-doc" type="checkbox" value="Inkoopfacturen"><span>Inkoopfacturen</span></label><label class="pck-choice"><input class="pck-doc" type="checkbox" value="Douanedocumenten"><span>Douanedocumenten</span></label><label class="pck-choice"><input class="pck-doc" type="checkbox" value="Anders"><span>Anders</span></label></div>
+</fieldset>
+<div class="pck-consent-wrap">
+<label class="pck-consent"><input id="pck-akkoord" name="akkoord" type="checkbox" required><span>Ik ga akkoord met de verwerking van mijn gegevens volgens de <a href="/privacyverklaring/" target="_blank" rel="noopener">privacyverklaring</a> van Peacock. <span class="pck-req">*</span></span></label><span class="pck-errmsg">Geef toestemming om je aan te melden.</span>
+</div>
+<div class="pck-hp" aria-hidden="true"><label for="pck-website">Laat dit veld leeg</label><input id="pck-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+<div class="pck-submit"><button class="pck-btn pck-btn--block" type="submit">Ja, ik meld me aan</button></div>
+<div class="pck-status" role="alert"></div>
+<p class="pck-micro">Gratis · Binnen een minuut geregeld · Geen verplichtingen</p>
+</form>
+<div class="pck-success" role="status" aria-live="polite">
+<div class="pck-success__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+<p class="pck-formcard__title pck-success__title" tabindex="-1">Je bent aangemeld!</p>
+<p class="pck-success__text">Bedankt voor je aanmelding. We sturen de deelnamelink naar je e-mailadres.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="pck-sec pck-sec--white">
+<div class="pck-wrap">
+<div class="pck-head">
+<p class="pck-eyebrow">Onderdeel van de AI Suite</p>
+<h2 class="pck-h2">Van binnenkomende vrachtbrief tot uitgaande offerte</h2>
+<p class="pck-lead">AI Capture Studio is onderdeel van de breder inzetbare Document Intelligence Studio. Daarin zitten onder andere de Mail Agent en de AI Document Generator. Zo automatiseer je complete werkstromen van A tot Z.</p>
+</div>
+<div class="pck-suite">
+<div class="pck-card is-current"><div class="pck-pill">In dit webinar</div><div class="pck-suite__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5M8.5 13h7M8.5 17h5"/></svg></div><h3 class="pck-h3">AI Capture Studio</h3><p>Inkomende documenten automatisch uitgelezen en verwerkt.</p></div>
+<div class="pck-card"><div class="pck-suite__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 6.5l9 6.5 9-6.5"/></svg></div><h3 class="pck-h3">Mail Agent</h3><p>Inkomende mail gelezen, geclassificeerd en naar de juiste plek gezet.</p></div>
+<div class="pck-card"><div class="pck-suite__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></div><h3 class="pck-h3">AI Document Generator</h3><p>Offertes, contracten en rapporten in je eigen format. Van dagen schrijven naar minuten controleren.</p></div>
+</div>
+</div>
+</section>
+<section class="pck-sec pck-sec--ice">
+<div class="pck-wrap">
+<div class="pck-head pck-head--center">
+<p class="pck-eyebrow">Veelgestelde vragen</p>
+<h2 class="pck-h2">Goed om te weten</h2>
+</div>
+<div class="pck-faq">
+<details><summary>Wat kost het webinar?</summary><p>Niets. Deelname is gratis.</p></details>
+<details><summary>Moet ik iets installeren?</summary><p>Nee. Je ontvangt vooraf een link en volgt het webinar gewoon in je browser.</p></details>
+<details><summary>Ik kan er niet bij zijn. Wat nu?</summary><p>Meld je toch aan. Na afloop ontvang je de opname in je mailbox.</p></details>
+<details><summary>Werkt AI Capture Studio met ons TMS?</summary><p>AI Capture Studio zet de gegevens gestructureerd klaar in Dataverse. Van daaruit is de koppeling met je TMS, WMS, ERP of boekhouding een kleine stap. Twijfel je over jouw systeem? Stel je vraag tijdens het webinar.</p></details>
+<details><summary>Is onze data veilig?</summary><p>Ja. AI Capture Studio draait binnen je eigen Microsoft-omgeving, met rollen, rechten en een audittrail per document. Je data blijft in je eigen tenant.</p></details>
+<details><summary>Hoe snel kunnen we starten?</summary><p>Na een live demo met een van je eigen documenten richten we in twee tot vier weken de eerste documentstroom in als pilot. Daarna breid je stap voor stap uit.</p></details>
+</div>
+</div>
+</section>
+<section class="pck-sec pck-sec--white">
+<div class="pck-wrap">
+<div class="pck-final">
+<div class="pck-circle pck-circle--white pck-circle--br" aria-hidden="true"></div>
+<div class="pck-final__inner">
+<h2 class="pck-h2">Klaar om te stoppen met overtypen?</h2>
+<p class="pck-lead">Meld je aan voor het webinar en zie live hoe jouw documentstroom er straks uitziet.</p>
+<div class="pck-btns"><a class="pck-btn" href="#aanmelden">Meld je gratis aan <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+<p class="pck-final__contact">Liever direct sparren? Bel <a href="tel:+31318250220">+31 (0)318-250 220</a> of mail <a href="mailto:info@peacock-ia.nl">info@peacock-ia.nl</a></p>
+<p class="pck-payoff">FORGE YOUR FUTURE</p>
+</div>
+</div>
+<p class="pck-sign">Peacock • Intelligent Automation</p>
+</div>
+</section>
+<script>
+(function () {
+  "use strict";
+  /* ================= INSTELLINGEN ================= */
+  /* URL van je Power Automate-flow ("When a HTTP request is received") of een andere webhook.
+     Leeg laten = de aanmelding opent een vooraf ingevulde e-mail naar FALLBACK_EMAIL. Zie LEESMIJ.md. */
+  var ENDPOINT = "";
+  var FALLBACK_EMAIL = "info@peacock-ia.nl";
+  /* ================================================ */
+  var root = document.getElementById("pck-webinar");
+  var form = document.getElementById("pck-form");
+  var card = document.getElementById("pck-formcard");
+  if (!root || !form || !card) { return; }
+  var webinar = root.getAttribute("data-webinar") || "Webinar";
+  var datum = root.getAttribute("data-datum") || "";
+  var tijd = root.getAttribute("data-tijd") || "";
+  if (datum.indexOf("DATUM") !== -1 || tijd.indexOf("TIJD") !== -1) {
+    console.warn("Peacock webinar: vergeet Donderdag 22 oktober 2026 en 15:00 – 15:45 uur niet in te vullen.");
+  }
+  var button = form.querySelector("button");
+  var status = form.querySelector(".pck-status");
+  var emailPattern = /^\S+@\S+\.\S{2,}$/;
+  form.noValidate = true;
+  function field(name) { return form.elements.namedItem(name); }
+  function value(name) { var el = field(name); return el ? String(el.value || "").trim() : ""; }
+  function setError(el, isError) {
+    var wrap = el.closest(".pck-field") || el.closest(".pck-consent-wrap");
+    if (wrap) { wrap.classList.toggle("is-error", isError); }
+    var consent = el.closest(".pck-consent");
+    if (consent) { consent.classList.toggle("is-error", isError); }
+    el.setAttribute("aria-invalid", isError ? "true" : "false");
+  }
+  function validate() {
+    var firstInvalid = null;
+    var rules = [
+      { name: "voornaam", ok: value("voornaam") !== "" },
+      { name: "achternaam", ok: value("achternaam") !== "" },
+      { name: "email", ok: emailPattern.test(value("email")) },
+      { name: "bedrijf", ok: value("bedrijf") !== "" },
+      { name: "akkoord", ok: field("akkoord").checked }
+    ];
+    rules.forEach(function (rule) {
+      var el = field(rule.name);
+      setError(el, !rule.ok);
+      if (!rule.ok && !firstInvalid) { firstInvalid = el; }
+    });
+    if (firstInvalid) { firstInvalid.focus(); }
+    return !firstInvalid;
+  }
+  function collect() {
+    var docs = [];
+    form.querySelectorAll("input.pck-doc:checked").forEach(function (cb) { docs.push(cb.value); });
+    var qs = new URLSearchParams(window.location.search);
+    return {
+      webinar: webinar,
+      datum: datum,
+      tijd: tijd,
+      voornaam: value("voornaam"),
+      achternaam: value("achternaam"),
+      email: value("email"),
+      bedrijf: value("bedrijf"),
+      functie: value("functie"),
+      telefoon: value("telefoon"),
+      documenten: docs.join(", "),
+      akkoord_privacy: true,
+      pagina: window.location.origin + window.location.pathname,
+      utm_source: qs.get("utm_source") || "",
+      utm_medium: qs.get("utm_medium") || "",
+      utm_campaign: qs.get("utm_campaign") || "",
+      aangemeld_op: new Date().toISOString()
+    };
+  }
+  function showStatus(message) {
+    if (!status) { if (message) { window.alert(message); } return; }
+    status.textContent = message;
+    status.classList.toggle("is-visible", !!message);
+  }
+  function setBusy(isBusy) {
+    button.classList.toggle("is-busy", isBusy);
+    button.disabled = isBusy;
+    button.textContent = isBusy ? "Bezig met aanmelden..." : "Ja, ik meld me aan";
+  }
+  function track(data) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "webinar_aanmelding", webinar: data.webinar, bedrijf: data.bedrijf });
+  }
+  function showSuccess(data, viaMail) {
+    var title = card.querySelector(".pck-success__title");
+    var text = card.querySelector(".pck-success__text");
+    if (viaMail) {
+      title.textContent = "Nog één stap!";
+      text.textContent = "Je e-mailprogramma is geopend met je aanmelding. Verstuur die e-mail om je plek te bevestigen. Lukt dat niet? Mail je aanmelding naar " + FALLBACK_EMAIL + ".";
+    } else if (data) {
+      title.textContent = "Je bent aangemeld!";
+      text.textContent = "Bedankt, " + data.voornaam + ". We sturen de deelnamelink naar " + data.email + ". Tot dan!";
+    }
+    card.classList.add("is-done");
+    card.scrollIntoView({ behavior: "smooth", block: "start" });
+    title.focus({ preventScroll: true });
+  }
+  function sendByMail(data) {
+    var lines = [
+      "Graag meld ik me aan voor: " + data.webinar + " (" + data.datum + ", " + data.tijd + ").",
+      "",
+      "Naam: " + data.voornaam + " " + data.achternaam,
+      "E-mail: " + data.email,
+      "Bedrijf: " + data.bedrijf,
+      "Functie: " + data.functie,
+      "Telefoon: " + data.telefoon,
+      "Documenten die de meeste tijd kosten: " + data.documenten,
+      "",
+      "Ik ga akkoord met de verwerking van mijn gegevens volgens de privacyverklaring van Peacock."
+    ];
+    window.location.href = "mailto:" + FALLBACK_EMAIL +
+      "?subject=" + encodeURIComponent("Aanmelding " + data.webinar) +
+      "&body=" + encodeURIComponent(lines.join("\n"));
+    track(data);
+    showSuccess(data, true);
+  }
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    showStatus("");
+    if (value("website") !== "") { showSuccess(null, false); return; }
+    if (!validate()) { return; }
+    var data = collect();
+    if (!ENDPOINT) { sendByMail(data); return; }
+    setBusy(true);
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    }).then(function (response) {
+      if (!response.ok) { throw new Error("HTTP " + response.status); }
+      track(data);
+      showSuccess(data, false);
+    }).catch(function () {
+      setBusy(false);
+      showStatus("Er ging iets mis bij het versturen. Probeer het opnieuw of mail ons via " + FALLBACK_EMAIL + ".");
+    });
+  });
+  form.addEventListener("input", function (event) {
+    if (event.target.getAttribute("aria-invalid") === "true") { setError(event.target, false); }
+  });
+  form.addEventListener("change", function (event) {
+    if (event.target.getAttribute("aria-invalid") === "true") { setError(event.target, false); }
+  });
+})();
+</script>
+</div>
+
+</div></article></main>
+<footer class="demo-foot">Peacock IA · Koningsschot 37 · 3905 PR Veenendaal · +31 318 25 02 20 · info@peacock-ia.nl</footer>
+</body></html>
